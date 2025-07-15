@@ -64,7 +64,116 @@ export default function CourseDetails() {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
 
-  const course = {
+  // Sample courses data - in a real app, this would come from an API
+  const coursesData = {
+    "1": {
+      id: 1,
+      title: "French Course",
+      subtitle:
+        "Comprehensive French language course from beginner to intermediate level with native speakers",
+      description:
+        "This comprehensive French course takes you from complete beginner to intermediate level. You'll learn practical conversation skills, proper grammar, and cultural insights that will help you communicate effectively in French-speaking countries. Our native French speakers will guide you through interactive lessons and real-world scenarios.",
+      image: "bg-gradient-to-br from-blue-500 to-indigo-600",
+      price: { usd: "$299", egp: "4,800EGP" },
+      originalPrice: { usd: "$399", egp: "6,400EGP" },
+      discount: 25,
+      rating: 4.9,
+      reviewCount: 1820,
+      students: 1820,
+      duration: "16 weeks",
+      level: "Beginner",
+      category: "Global Languages",
+      language: "English",
+      subtitles: ["English", "Arabic"],
+      lastUpdated: "November 2024",
+      certificate: true,
+      featured: true,
+      startDate: "January 15, 2025",
+      instructor: {
+        name: "Marie Dubois",
+        title: "French Language Specialist",
+        company: "Sorbonne University",
+        avatar:
+          "https://images.unsplash.com/photo-1494790108755-2616b612b788?w=150&h=150&fit=crop&crop=face",
+        bio: "Marie is a native French speaker with over 8 years of experience teaching French to international students. She holds a Master's degree in French Literature and has helped thousands of students achieve fluency.",
+        students: 8420,
+        courses: 5,
+        rating: 4.9,
+      },
+      skills: [
+        "Basic French conversation and greetings",
+        "Essential French grammar and sentence structure",
+        "French pronunciation and accent training",
+        "Everyday vocabulary for travel and work",
+        "French culture and social customs",
+        "Reading comprehension skills",
+        "Writing skills for emails and letters",
+        "Listening comprehension with native speakers",
+      ],
+      requirements: [
+        "No previous French experience required",
+        "Willingness to practice speaking regularly",
+        "Computer with internet connection",
+        "Microphone for speaking exercises",
+      ],
+    },
+    "9": {
+      id: 9,
+      title: "Web Design – Front-End",
+      subtitle:
+        "Master modern front-end web development with HTML5, CSS3, JavaScript, and React",
+      description:
+        "This comprehensive course takes you from intermediate to advanced web development skills. You'll learn to build scalable, production-ready applications using modern technologies and best practices used by top tech companies.",
+      image: "bg-gradient-to-br from-blue-500 to-purple-600",
+      price: { usd: "$399", egp: "6,400EGP" },
+      originalPrice: { usd: "$499", egp: "8,000EGP" },
+      discount: 20,
+      rating: 4.9,
+      reviewCount: 2431,
+      students: 2431,
+      duration: "16 weeks",
+      level: "Intermediate",
+      category: "Programming & Technology",
+      language: "English",
+      subtitles: ["English", "Arabic"],
+      lastUpdated: "November 2024",
+      certificate: true,
+      featured: true,
+      startDate: "January 15, 2025",
+      instructor: {
+        name: "Alex Rodriguez",
+        title: "Senior Front-End Developer",
+        company: "Google",
+        avatar:
+          "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop&crop=face",
+        bio: "Alex is a senior software engineer with 8+ years of experience building scalable web applications. He has worked at top tech companies and taught thousands of students worldwide.",
+        students: 15420,
+        courses: 8,
+        rating: 4.9,
+      },
+      skills: [
+        "Modern React development with hooks and context",
+        "Building responsive layouts with CSS Grid and Flexbox",
+        "JavaScript ES6+ features and best practices",
+        "HTML5 semantic elements and accessibility",
+        "CSS animations and transitions",
+        "Version control with Git and GitHub",
+        "Web performance optimization",
+        "Testing frontend applications",
+        "Deployment strategies",
+        "Code organization and architecture patterns",
+      ],
+      requirements: [
+        "Basic knowledge of HTML, CSS, and JavaScript",
+        "Understanding of programming fundamentals",
+        "Familiarity with command line/terminal",
+        "Computer with internet connection",
+      ],
+    },
+  };
+
+  // Get the course data based on ID, fallback to default course
+  const course = coursesData[courseId] || {
     id: 1,
     title: "Advanced Web Development",
     subtitle:
