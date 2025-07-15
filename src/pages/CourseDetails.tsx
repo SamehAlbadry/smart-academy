@@ -172,53 +172,134 @@ export default function CourseDetails() {
     },
   };
 
+  // Add modules data for courses
+  const getModulesForCourse = (courseId) => {
+    if (courseId === "1") {
+      return [
+        {
+          title: "French Basics and Pronunciation",
+          lessons: 6,
+          duration: "2.5 hours",
+          icon: Code,
+          topics: [
+            "French alphabet and sounds",
+            "Basic greetings and introductions",
+            "Numbers and counting",
+            "Days of the week and months",
+            "Essential pronunciation rules",
+            "Common expressions",
+          ],
+        },
+        {
+          title: "Grammar Fundamentals",
+          lessons: 8,
+          duration: "4 hours",
+          icon: Layers,
+          topics: [
+            "Noun genders and articles",
+            "Present tense verbs",
+            "Question formation",
+            "Adjective agreement",
+            "Prepositions",
+            "Negative sentences",
+          ],
+        },
+        {
+          title: "Practical Conversations",
+          lessons: 6,
+          duration: "3 hours",
+          icon: MessageCircle,
+          topics: [
+            "At the restaurant",
+            "Shopping and prices",
+            "Asking for directions",
+            "Talking about family",
+            "Hobbies and interests",
+            "Travel situations",
+          ],
+        },
+      ];
+    } else {
+      return [
+        {
+          title: "Introduction to Modern Web Development",
+          lessons: 5,
+          duration: "2 hours",
+          icon: Code,
+          topics: [
+            "Course overview",
+            "Development environment setup",
+            "Modern JavaScript features",
+            "Git and version control",
+            "Project structure",
+          ],
+        },
+        {
+          title: "React Fundamentals and Advanced Patterns",
+          lessons: 8,
+          duration: "4 hours",
+          icon: Layers,
+          topics: [
+            "Components and JSX",
+            "State and props",
+            "Hooks",
+            "Context API",
+            "Performance optimization",
+            "Advanced patterns",
+          ],
+        },
+        {
+          title: "Responsive Design and CSS",
+          lessons: 6,
+          duration: "3 hours",
+          icon: Monitor,
+          topics: [
+            "CSS Grid and Flexbox",
+            "Mobile-first design",
+            "CSS animations",
+            "Sass/SCSS",
+            "Design systems",
+            "Browser compatibility",
+          ],
+        },
+      ];
+    }
+  };
+
   // Get the course data based on ID, fallback to default course
   const course = coursesData[courseId] || {
     id: 1,
-    title: "Advanced Web Development",
-    subtitle:
-      "Master modern web development with React, Node.js, and industry best practices",
+    title: "Course Not Found",
+    subtitle: "The requested course could not be found",
     description:
-      "This comprehensive course takes you from intermediate to advanced web development skills. You'll learn to build scalable, production-ready applications using modern technologies and best practices used by top tech companies.",
-    image: "bg-gradient-to-br from-blue-500 to-purple-600",
-    price: { usd: "$299", egp: "5,000EGP" },
-    originalPrice: { usd: "$399", egp: "6,500EGP" },
-    discount: 25,
-    rating: 4.9,
-    reviewCount: 892,
-    students: 2431,
-    duration: "12 weeks",
-    level: "Advanced",
-    category: "Development",
+      "Please return to the courses page to browse available courses.",
+    image: "bg-gradient-to-br from-gray-500 to-gray-600",
+    price: { usd: "$0", egp: "0 EGP" },
+    originalPrice: { usd: "$0", egp: "0 EGP" },
+    discount: 0,
+    rating: 0,
+    reviewCount: 0,
+    students: 0,
+    duration: "0 weeks",
+    level: "Unknown",
+    category: "Unknown",
     language: "English",
-    subtitles: ["English", "Arabic"],
-    lastUpdated: "November 2024",
-    certificate: true,
-    featured: true,
-    startDate: "January 15, 2025",
+    subtitles: ["English"],
+    lastUpdated: "Never",
+    certificate: false,
+    featured: false,
+    startDate: "TBD",
     instructor: {
-      name: "Dr. Sarah Ahmed",
-      title: "Senior Software Engineer",
-      company: "Google",
-      avatar:
-        "https://images.unsplash.com/photo-1494790108755-2616b332c1fe?w=100&h=100&fit=crop&crop=face",
-      bio: "Dr. Sarah is a senior software engineer with 10+ years of experience building scalable web applications. She has worked at top tech companies and taught thousands of students worldwide.",
-      students: 15420,
-      courses: 8,
-      rating: 4.9,
+      name: "Unknown",
+      title: "Unknown",
+      company: "Unknown",
+      avatar: "",
+      bio: "Course not found.",
+      students: 0,
+      courses: 0,
+      rating: 0,
     },
-    skills: [
-      "Modern React development with hooks and context",
-      "Building RESTful APIs with Node.js and Express",
-      "Database design and implementation with MongoDB",
-      "Authentication and authorization best practices",
-      "Deployment strategies and DevOps fundamentals",
-      "Testing strategies for full-stack applications",
-      "Performance optimization techniques",
-      "Security best practices",
-      "Advanced JavaScript concepts",
-      "Code organization and architecture patterns",
-    ],
+    skills: ["Course not available"],
     modules: [
       {
         title: "Introduction to Modern Web Development",
