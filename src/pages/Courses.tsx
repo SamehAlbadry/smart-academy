@@ -1188,7 +1188,9 @@ export default function Courses() {
             >
               {sortedCourses.map((course) => (
                 <div key={course.id} className="group cursor-pointer">
-                  <Card className="h-full bg-white dark:bg-gray-900 border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden rounded-xl group-hover:-translate-y-2">
+                  <Card
+                    className={`${viewMode === "list" ? "flex flex-row h-auto" : "h-full"} bg-white dark:bg-gray-900 border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden rounded-xl group-hover:-translate-y-1`}
+                  >
                     {/* Course Image Section */}
                     <div className="relative h-52 overflow-hidden">
                       <div className={`w-full h-full ${course.image}`} />
