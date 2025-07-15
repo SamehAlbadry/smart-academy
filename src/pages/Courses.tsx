@@ -1246,13 +1246,15 @@ export default function Courses() {
                     </div>
 
                     {/* Course Content */}
-                    <div className="p-6 space-y-4">
+                    <div
+                      className={`${viewMode === "list" ? "flex-1" : ""} p-6 space-y-5`}
+                    >
                       {/* Title and Description */}
-                      <div className="space-y-2">
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white line-clamp-2 group-hover:text-primary transition-colors">
+                      <div className="space-y-3">
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white line-clamp-2 group-hover:text-primary transition-colors duration-300 leading-tight">
                           {course.title}
                         </h3>
-                        <p className="text-gray-600 dark:text-gray-300 text-sm line-clamp-2 leading-relaxed">
+                        <p className="text-gray-600 dark:text-gray-300 text-sm line-clamp-3 leading-relaxed">
                           {course.description}
                         </p>
                       </div>
