@@ -1330,15 +1330,14 @@ export default function Courses() {
 
                         {/* Action Button */}
                         <div className="mt-auto">
-                          <Link
-                            to={`/course-details?id=${course.id}`}
-                            className="inline-block w-full"
+                          <a
+                            href={`/course-details?id=${course.id}`}
+                            className="w-full bg-primary hover:bg-primary/90 shadow-lg group-hover:shadow-xl transition-all duration-300 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 text-primary-foreground h-10 px-4 py-2 cursor-pointer"
+                            style={{ textDecoration: "none" }}
                           >
-                            <button className="w-full bg-primary hover:bg-primary/90 shadow-lg group-hover:shadow-xl transition-all duration-300 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground h-10 px-4 py-2">
-                              <span>View Details</span>
-                              <Play className="ml-2 h-4 w-4" />
-                            </button>
-                          </Link>
+                            <span>View Details</span>
+                            <Play className="ml-2 h-4 w-4" />
+                          </a>
                         </div>
                       </CardContent>
                     </div>
