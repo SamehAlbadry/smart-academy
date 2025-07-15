@@ -52,7 +52,14 @@ const useEgyptDetection = () => {
 
 // Main Component
 const GeolocationPopup = () => {
-  const [showLocationRequest, setShowLocationRequest] = useState(true);
+  // Check if user has already been asked about location in this session
+  const [hasAskedLocation, setHasAskedLocation] = useState(() => {
+    return sessionStorage.getItem("hasAskedLocation") === "true";
+  });
+
+  const [showLocationRequest, setShowLocationRequest] = useState(() => {
+    return !hasAskedLocation;
+  });
   const [showCurrencyReminder, setShowCurrencyReminder] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -60,9 +67,16 @@ const GeolocationPopup = () => {
   const isEgyptUser = useStore((state) => state.isEgyptUser);
   const setEgyptUser = useStore((state) => state.setEgyptUser);
 
+  // Don't show anything if already asked in this session
+  if (hasAskedLocation) {
+    return null;
+  }
+
   const requestLocation = async () => {
     setIsProcessing(true);
     setShowLocationRequest(false);
+    sessionStorage.setItem("hasAskedLocation", "true");
+    setHasAskedLocation(true);
 
     const isEgypt = await detectEgypt();
 
@@ -74,6 +88,8 @@ const GeolocationPopup = () => {
     setEgyptUser(false); // Default to USD when denied
     setShowLocationRequest(false);
     setShowCurrencyReminder(true);
+    sessionStorage.setItem("hasAskedLocation", "true");
+    setHasAskedLocation(true);
   };
 
   const openLocationSettings = async () => {
@@ -89,6 +105,8 @@ const GeolocationPopup = () => {
 
   const closeAllPopups = () => {
     setShowCurrencyReminder(false);
+    sessionStorage.setItem("hasAskedLocation", "true");
+    setHasAskedLocation(true);
   };
 
   return (

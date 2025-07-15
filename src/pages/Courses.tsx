@@ -1049,7 +1049,10 @@ export default function Courses() {
       case "students":
         return b.students - a.students;
       default:
-        return b.featured ? 1 : -1;
+        // Show featured courses first, then sort by students count
+        if (a.featured && !b.featured) return -1;
+        if (!a.featured && b.featured) return 1;
+        return b.students - a.students;
     }
   });
 
@@ -1072,10 +1075,11 @@ export default function Courses() {
               {t("courses.badge")}
             </Badge>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 gradient-text">
-              {t("courses.title")}
+              Explore Our Courses
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              {t("courses.subtitle")}
+              Discover {courses.length} amazing courses designed to help you
+              learn and grow.
             </p>
           </AnimatedSection>
         </div>
@@ -1155,7 +1159,7 @@ export default function Courses() {
 
               <div className="flex items-center justify-between">
                 <p className="text-sm text-muted-foreground">
-                  {t("courses.results", { count: sortedCourses.length })}
+                  Showing {sortedCourses.length} of {courses.length} courses
                 </p>
                 <div className="flex items-center gap-2">
                   <Button
@@ -1178,156 +1182,203 @@ export default function Courses() {
           </AnimatedSection>
 
           {/* Courses Grid */}
-          <AnimatedSection animation="fade-up" delay={400} className="mt-16">
-            <StaggeredList
-              className={`grid gap-8 ${
-                viewMode === "grid"
-                  ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-                  : "grid-cols-1"
-              }`}
-              itemClassName="group"
-              delay={100}
-            >
-              {sortedCourses.map((course) => (
-                <MagneticButton key={course.id} intensity={8}>
-                  <Card
-                    className={`course-card card-hover bg-card/80 backdrop-blur-sm border-2 border-transparent hover:border-primary/20 overflow-hidden group transition-all duration-300 ${
-                      viewMode === "list" ? "flex flex-row" : "h-full"
-                    }`}
-                  >
-                    <div
-                      className={`relative overflow-hidden ${
-                        viewMode === "list" ? "w-80 h-48 flex-shrink-0" : "h-48"
-                      } ${course.image}`}
+          <AnimatedSection animation="fade-up" delay={200} className="mt-16">
+            {sortedCourses.length === 0 ? (
+              <div className="text-center py-16">
+                <div className="text-6xl mb-4">📚</div>
+                <h3 className="text-2xl font-bold mb-2">No courses found</h3>
+                <p className="text-muted-foreground mb-4">
+                  Try adjusting your search criteria or browse all courses.
+                </p>
+                <Button
+                  onClick={() => {
+                    setSearchQuery("");
+                    setFilterBy("all");
+                  }}
+                >
+                  Show All Courses
+                </Button>
+              </div>
+            ) : (
+              <div
+                className={`grid gap-6 ${
+                  viewMode === "grid"
+                    ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3"
+                    : "grid-cols-1 max-w-4xl mx-auto"
+                }`}
+              >
+                {sortedCourses.map((course) => (
+                  <div key={course.id} className="group cursor-pointer">
+                    <Card
+                      className={`${viewMode === "list" ? "flex flex-row h-auto" : "h-full"} bg-white dark:bg-gray-900 border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden rounded-xl group-hover:-translate-y-1`}
                     >
-                      {/* Featured Badge */}
-                      {course.featured && (
-                        <FloatingElement className="absolute top-4 left-4 z-10">
-                          <Badge className="bg-yellow-500 text-yellow-900 shadow-lg">
-                            <Sparkles className="mr-1 h-3 w-3" />
-                            Featured
+                      {/* Course Image Section */}
+                      <div
+                        className={`relative overflow-hidden ${viewMode === "list" ? "w-80 h-48 flex-shrink-0" : "h-52"}`}
+                      >
+                        <div className={`w-full h-full ${course.image}`} />
+
+                        {/* Overlay with gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+                        {/* Badges */}
+                        <div className="absolute top-4 left-4 flex gap-2">
+                          {course.featured && (
+                            <Badge className="bg-yellow-500 text-yellow-900 border-0 font-semibold px-3 py-1">
+                              <Sparkles className="mr-1 h-3 w-3" />
+                              Featured
+                            </Badge>
+                          )}
+                          <Badge className="bg-white/90 text-gray-800 border-0 font-medium">
+                            {course.level}
                           </Badge>
-                        </FloatingElement>
-                      )}
+                        </div>
 
-                      {/* Level Badge */}
-                      <FloatingElement className="absolute top-4 right-4 z-10">
-                        <Badge className="bg-white/95 text-gray-800 shadow-lg backdrop-blur-sm">
-                          {course.level}
-                        </Badge>
-                      </FloatingElement>
+                        {/* Price Badge */}
+                        <div className="absolute top-4 right-4">
+                          <div className="bg-black/70 backdrop-blur-md text-white px-3 py-2 rounded-lg">
+                            <div className="text-xl font-bold">
+                              {isEgyptUser === true
+                                ? course.price.egp
+                                : course.price.usd}
+                            </div>
+                            <div className="text-xs line-through opacity-70">
+                              {isEgyptUser === true
+                                ? course.originalPrice.egp
+                                : course.originalPrice.usd}
+                            </div>
+                          </div>
+                        </div>
 
-                      {/* Category Badge */}
-                      <div className="absolute bottom-4 left-4 z-10">
-                        <Badge className="bg-primary text-primary-foreground">
-                          {course.category}
-                        </Badge>
-                      </div>
+                        {/* Category Badge */}
+                        <div className="absolute bottom-4 left-4">
+                          <Badge className="bg-primary/90 text-primary-foreground border-0 backdrop-blur-sm">
+                            {course.category}
+                          </Badge>
+                        </div>
 
-                      {/* Price */}
-                      <div className="absolute bottom-4 right-4 z-10">
-                        <div className="text-white font-bold text-lg bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-lg">
-                          <span className="text-lg font-bold">
-                            {isEgyptUser === true
-                              ? course.price.egp
-                              : course.price.usd}
-                          </span>
-                          <span className="text-sm line-through opacity-60 ml-2">
-                            {isEgyptUser === true
-                              ? course.originalPrice.egp
-                              : course.originalPrice.usd}
-                          </span>
+                        {/* Duration Badge */}
+                        <div className="absolute bottom-4 right-4">
+                          <Badge className="bg-white/90 text-gray-800 border-0">
+                            <Clock className="mr-1 h-3 w-3" />
+                            {course.duration}
+                          </Badge>
                         </div>
                       </div>
 
-                      {/* Gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/80 transition-all duration-500" />
-                    </div>
+                      {/* Course Content */}
+                      <div
+                        className={`${viewMode === "list" ? "flex-1" : ""} p-6 space-y-5`}
+                      >
+                        {/* Title and Description */}
+                        <div className="space-y-3">
+                          <h3 className="text-xl font-bold text-gray-900 dark:text-white line-clamp-2 group-hover:text-primary transition-colors duration-300 leading-tight">
+                            {course.title}
+                          </h3>
+                          <p className="text-gray-600 dark:text-gray-300 text-sm line-clamp-3 leading-relaxed">
+                            {course.description}
+                          </p>
+                        </div>
 
-                    <div
-                      className={`${
-                        viewMode === "list" ? "flex-1" : ""
-                      } flex flex-col`}
-                    >
-                      <CardHeader className="pb-4">
-                        <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors duration-300">
-                          {course.title}
-                        </CardTitle>
-                        <p className="text-muted-foreground text-sm line-clamp-2">
-                          {course.description}
-                        </p>
-                      </CardHeader>
-
-                      <CardContent className="space-y-4 flex-1 flex flex-col">
-                        {/* Instructor Information */}
-                        <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
-                          <Avatar className="w-10 h-10">
+                        {/* Instructor */}
+                        <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                          <Avatar className="h-12 w-12 ring-2 ring-primary/20">
                             <AvatarImage
                               src={course.instructor.avatar}
                               alt={course.instructor.name}
                             />
-                            <AvatarFallback>
-                              <User className="h-5 w-5" />
+                            <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                              {course.instructor.name.charAt(0)}
                             </AvatarFallback>
                           </Avatar>
                           <div className="flex-1 min-w-0">
-                            <p className="font-medium text-sm truncate">
+                            <p className="font-semibold text-gray-900 dark:text-white text-sm">
                               {course.instructor.name}
                             </p>
-                            <p className="text-xs text-muted-foreground truncate">
+                            <p className="text-xs text-gray-600 dark:text-gray-400 truncate">
                               {course.instructor.title}
                             </p>
-                            <p className="text-xs text-primary font-medium">
-                              <Calendar className="inline h-3 w-3 mr-1" />
+                            <p className="text-xs text-primary font-medium mt-1">
                               {course.instructor.experience} experience
                             </p>
                           </div>
                         </div>
 
-                        {/* Course Stats */}
-                        <div className="grid grid-cols-3 gap-4 text-sm">
-                          <div className="flex items-center gap-1 text-muted-foreground">
-                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                            <span className="font-medium">{course.rating}</span>
+                        {/* Stats */}
+                        <div className="grid grid-cols-3 gap-4">
+                          <div className="text-center p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                            <div className="flex items-center justify-center mb-1">
+                              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                            </div>
+                            <div className="text-sm font-bold text-gray-900 dark:text-white">
+                              {course.rating}
+                            </div>
+                            <div className="text-xs text-gray-600 dark:text-gray-400">
+                              Rating
+                            </div>
                           </div>
-                          <div className="flex items-center gap-1 text-muted-foreground">
-                            <Users className="h-4 w-4" />
-                            <span className="font-medium">
-                              {course.students.toLocaleString()}
-                            </span>
+
+                          <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                            <div className="flex items-center justify-center mb-1">
+                              <Users className="h-4 w-4 text-blue-600" />
+                            </div>
+                            <div className="text-sm font-bold text-gray-900 dark:text-white">
+                              {course.students > 1000
+                                ? `${(course.students / 1000).toFixed(1)}k`
+                                : course.students}
+                            </div>
+                            <div className="text-xs text-gray-600 dark:text-gray-400">
+                              Students
+                            </div>
                           </div>
-                          <div className="flex items-center gap-1 text-muted-foreground">
-                            <Clock className="h-4 w-4" />
-                            <span className="font-medium">
-                              {course.duration}
-                            </span>
+
+                          <div className="text-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                            <div className="flex items-center justify-center mb-1">
+                              <BookOpen className="h-4 w-4 text-green-600" />
+                            </div>
+                            <div className="text-sm font-bold text-gray-900 dark:text-white">
+                              {course.lessons}
+                            </div>
+                            <div className="text-xs text-gray-600 dark:text-gray-400">
+                              Lessons
+                            </div>
                           </div>
                         </div>
 
-                        {/* Course Details */}
-                        <div className="flex items-center justify-between text-sm text-muted-foreground">
-                          <span>{course.lessons} lessons</span>
+                        {/* Features */}
+                        <div className="flex items-center justify-between py-2">
                           {course.certificate && (
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-1 text-green-600 dark:text-green-400">
                               <Award className="h-4 w-4" />
-                              <span>Certificate</span>
+                              <span className="text-sm font-medium">
+                                Certificate
+                              </span>
                             </div>
                           )}
+                          <div className="flex items-center gap-1 text-primary">
+                            <TrendingUp className="h-4 w-4" />
+                            <span className="text-sm font-medium">Popular</span>
+                          </div>
                         </div>
 
                         {/* Action Button */}
-                        <Link to="/course-details" className="mt-auto">
-                          <Button className="w-full bg-primary hover:bg-primary/90 shadow-lg group-hover:shadow-xl transition-all duration-300">
-                            <span>{t("courses.viewDetails")}</span>
-                            <Play className="ml-2 h-4 w-4" />
-                          </Button>
-                        </Link>
-                      </CardContent>
-                    </div>
-                  </Card>
-                </MagneticButton>
-              ))}
-            </StaggeredList>
+                        <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
+                          <Link
+                            to={`/course-details/${course.id}`}
+                            className="block"
+                          >
+                            <Button className="w-full h-12 text-base font-semibold bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 shadow-lg hover:shadow-xl transition-all duration-300 group/btn border-0 rounded-lg">
+                              <span>View Details</span>
+                              <Play className="ml-2 h-5 w-5 group-hover/btn:translate-x-1 transition-transform duration-300" />
+                            </Button>
+                          </Link>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                ))}
+              </div>
+            )}
           </AnimatedSection>
 
           {/* Load More Button */}

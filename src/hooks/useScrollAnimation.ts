@@ -49,7 +49,7 @@ export function useScrollAnimation(options: UseScrollAnimationOptions = {}) {
   return { ref, isVisible };
 }
 
-export function useStaggeredAnimation(count: number, delay: number = 100) {
+export function useStaggeredAnimation(count: number, delay: number = 50) {
   const [visibleItems, setVisibleItems] = useState<boolean[]>(
     new Array(count).fill(false),
   );

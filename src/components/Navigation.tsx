@@ -22,6 +22,8 @@ export function Navigation() {
   const navigationItems = [
     { href: "/", label: t("nav.home") },
     { href: "/courses", label: t("nav.courses") },
+    { href: "/services", label: "Services" },
+    { href: "/portfolio", label: "Portfolio" },
     { href: "/about", label: t("nav.about") },
     { href: "/contact", label: t("nav.contact") },
   ];
@@ -64,12 +66,12 @@ export function Navigation() {
             to="/"
             className="mr-4 flex items-center space-x-2 group transition-all duration-300 hover-scale-102"
           >
-          <img
-    src="https://smartonlinelearningedu.com/static/media/WhatsApp%20Image%202025-05-26%20at%2000.38.02_5277dbf4.f388d82bb2a41fa81dbf.jpg"
-    alt="Logo"
-    className="h-12
+            <img
+              src="https://smartonlinelearningedu.com/static/media/WhatsApp%20Image%202025-05-26%20at%2000.38.02_5277dbf4.f388d82bb2a41fa81dbf.jpg"
+              alt="Logo"
+              className="h-12
           w-12 object-cover rounded-full"
-  />
+            />
             <span className="hidden font-semibold text-lg sm:inline-block bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
               {t("home.hero.title")}
             </span>
@@ -111,12 +113,12 @@ export function Navigation() {
               className="flex items-center"
               onClick={() => setIsOpen(false)}
             >
-         <img
-    src="https://smartonlinelearningedu.com/static/media/WhatsApp%20Image%202025-05-26%20at%2000.38.02_5277dbf4.f388d82bb2a41fa81dbf.jpg"
-    alt="Logo"
-    className="h-10 w-10 object-cover rounded-full"
-  />
-              
+              <img
+                src="https://smartonlinelearningedu.com/static/media/WhatsApp%20Image%202025-05-26%20at%2000.38.02_5277dbf4.f388d82bb2a41fa81dbf.jpg"
+                alt="Logo"
+                className="h-10 w-10 object-cover rounded-full"
+              />
+
               <span className="font-bold">{t("home.hero.title")}</span>
             </Link>
             <div className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
@@ -133,11 +135,11 @@ export function Navigation() {
               to="/"
               className="flex items-center space-x-2 md:hidden group transition-all duration-300"
             >
-             <img
-    src="https://smartonlinelearningedu.com/static/media/WhatsApp%20Image%202025-05-26%20at%2000.38.02_5277dbf4.f388d82bb2a41fa81dbf.jpg"
-    alt="Logo"
-    className="h-10 w-10 object-cover rounded-full"
-  />
+              <img
+                src="https://smartonlinelearningedu.com/static/media/WhatsApp%20Image%202025-05-26%20at%2000.38.02_5277dbf4.f388d82bb2a41fa81dbf.jpg"
+                alt="Logo"
+                className="h-10 w-10 object-cover rounded-full"
+              />
               <span className="font-semibold text-base bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
                 SLA
               </span>
@@ -150,13 +152,8 @@ export function Navigation() {
             <div className="transform hover-scale-105 transition-transform duration-300">
               <ThemeToggle />
             </div>
-            <Link
-              key={"/LogIn"}
-              to={"/LogIn"}
-            >
-              <Button >
-                LogIn/SignUp
-              </Button>
+            <Link key={"/LogIn"} to={"/LogIn"}>
+              <Button>LogIn/SignUp</Button>
             </Link>
           </nav>
         </div>

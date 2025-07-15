@@ -11,6 +11,8 @@ import Courses from "./pages/Courses";
 import CourseDetails from "./pages/CourseDetails";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Services from "./pages/Services";
+import Portfolio from "./pages/Portfolio";
 import NotFound from "./pages/NotFound";
 import GeolocationPopup from "./components/features/geolocationPushUp";
 import { LoginPage } from "./pages/LogIn";
@@ -34,9 +36,11 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/courses" element={<Courses />} />
-              <Route path="/course-details" element={<CourseDetails />} />
+              <Route path="/course-details/:id?" element={<CourseDetails />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/LogIn" element={<LoginPage />} />
               <Route path="/SignUp" element={<SignUpPage />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />

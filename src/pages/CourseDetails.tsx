@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Layout } from "@/components/Layout";
 import { useI18n } from "@/lib/i18n";
 import { useStore } from "@/store/useStore";
+import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -55,193 +56,369 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function CourseDetails() {
   const { t } = useI18n();
+  const { id } = useParams();
+  const navigate = useNavigate();
   const isEgyptUser = useStore((state) => state.isEgyptUser);
   const { toast } = useToast();
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
+  const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [completedLessons, setCompletedLessons] = useState([]);
+  const [showPreview, setShowPreview] = useState(false);
 
-  const course = {
-    id: 1,
-    title: "Advanced Web Development",
-    subtitle:
-      "Master modern web development with React, Node.js, and industry best practices",
-    description:
-      "This comprehensive course takes you from intermediate to advanced web development skills. You'll learn to build scalable, production-ready applications using modern technologies and best practices used by top tech companies.",
-    image: "bg-gradient-to-br from-blue-500 to-purple-600",
-    price: { usd: "$299", egp: "5,000EGP" },
-    originalPrice: { usd: "$399", egp: "6,500EGP" },
-    discount: 25,
-    rating: 4.9,
-    reviewCount: 892,
-    students: 2431,
-    duration: "12 weeks",
-    level: "Advanced",
-    category: "Development",
-    language: "English",
-    subtitles: ["English", "Arabic"],
-    lastUpdated: "November 2024",
-    certificate: true,
-    featured: true,
-    startDate: "January 15, 2025",
-    instructor: {
-      name: "Dr. Sarah Ahmed",
-      title: "Senior Software Engineer",
-      company: "Google",
-      avatar:
-        "https://images.unsplash.com/photo-1494790108755-2616b332c1fe?w=100&h=100&fit=crop&crop=face",
-      bio: "Dr. Sarah is a senior software engineer with 10+ years of experience building scalable web applications. She has worked at top tech companies and taught thousands of students worldwide.",
-      students: 15420,
-      courses: 8,
+  // Course data - this would typically come from an API
+  const coursesData = [
+    // Global Languages (24 Courses)
+    {
+      id: 1,
+      title: "French Course",
+      subtitle:
+        "Comprehensive French language course from beginner to intermediate level with native speakers.",
+      description:
+        "This comprehensive French course takes you from beginner to intermediate level with native speaker instruction. You'll learn conversational French, grammar fundamentals, and cultural nuances that will help you communicate effectively in French-speaking environments. Perfect for travelers, students, or professionals looking to expand their language skills.",
+      image: "bg-gradient-to-br from-blue-500 to-indigo-600",
+      price: { usd: "$299", egp: "4,800EGP" },
+      originalPrice: { usd: "$399", egp: "6,400EGP" },
+      discount: 25,
       rating: 4.9,
+      reviewCount: 320,
+      students: 1820,
+      duration: "16 weeks",
+      level: "Beginner",
+      category: "Global Languages",
+      language: "English",
+      subtitles: ["English", "Arabic", "French"],
+      lastUpdated: "November 2024",
+      certificate: true,
+      featured: true,
+      startDate: "January 15, 2025",
+      instructor: {
+        name: "Marie Dubois",
+        title: "French Language Specialist",
+        company: "Alliance Française",
+        avatar:
+          "https://images.unsplash.com/photo-1494790108755-2616b612b788?w=150&h=150&fit=crop&crop=face",
+        bio: "Marie is a native French speaker with over 8 years of experience teaching French to international students. She holds a Master's degree in French Literature and has developed innovative teaching methods that make learning French enjoyable and effective.",
+        students: 5420,
+        courses: 4,
+        rating: 4.9,
+        experience: "8 years",
+      },
+      skills: [
+        "Basic French conversation and pronunciation",
+        "French grammar fundamentals",
+        "Vocabulary for everyday situations",
+        "French culture and etiquette",
+        "Reading and writing in French",
+        "Business French basics",
+        "French pronunciation techniques",
+        "Listening comprehension skills",
+        "French idioms and expressions",
+        "Travel and tourism vocabulary",
+      ],
+      modules: [
+        {
+          title: "Introduction to French",
+          lessons: 8,
+          duration: "3 hours",
+          icon: Globe,
+          topics: [
+            "French alphabet and pronunciation",
+            "Basic greetings and introductions",
+            "Numbers and time",
+            "Common phrases",
+            "French culture overview",
+          ],
+        },
+        {
+          title: "Grammar Fundamentals",
+          lessons: 12,
+          duration: "4 hours",
+          icon: BookOpen,
+          topics: [
+            "Nouns and articles",
+            "Verb conjugations",
+            "Adjectives and agreement",
+            "Sentence structure",
+            "Question formation",
+          ],
+        },
+        {
+          title: "Everyday Conversations",
+          lessons: 10,
+          duration: "4 hours",
+          icon: MessageCircle,
+          topics: [
+            "Shopping and dining",
+            "Directions and transportation",
+            "Weather and seasons",
+            "Family and relationships",
+            "Hobbies and interests",
+          ],
+        },
+        {
+          title: "Intermediate French",
+          lessons: 8,
+          duration: "3 hours",
+          icon: TrendingUp,
+          topics: [
+            "Past and future tenses",
+            "Complex sentence structures",
+            "Formal vs informal language",
+            "Cultural contexts",
+          ],
+        },
+      ],
+      requirements: [
+        "No prior French knowledge required",
+        "Computer with internet connection",
+        "Headphones or speakers for audio lessons",
+        "Notebook for practice exercises",
+      ],
+      features: [
+        { icon: Monitor, text: "16 hours of HD video content" },
+        { icon: Download, text: "Downloadable resources and worksheets" },
+        { icon: Smartphone, text: "Mobile and TV access" },
+        { icon: Trophy, text: "Certificate of completion" },
+        { icon: Globe, text: "Lifetime access" },
+        { icon: Headphones, text: "24/7 student support" },
+      ],
+      reviews: [
+        {
+          id: 1,
+          name: "Ahmed Hassan",
+          avatar:
+            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Excellent course! Marie's teaching style is engaging and the lessons are well-structured. I can now have basic conversations in French.",
+          date: "2 weeks ago",
+        },
+        {
+          id: 2,
+          name: "Fatima Al-Zahra",
+          avatar:
+            "https://images.unsplash.com/photo-1494790108755-2616b332c1fe?w=50&h=50&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "This course helped me prepare for my trip to France. The cultural insights were particularly valuable!",
+          date: "1 month ago",
+        },
+        {
+          id: 3,
+          name: "Mohammed Ali",
+          avatar:
+            "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face",
+          rating: 4,
+          comment:
+            "Great foundation course. The pronunciation exercises really helped me improve my accent.",
+          date: "3 weeks ago",
+        },
+      ],
+      lessons: 64,
     },
-    skills: [
-      "Modern React development with hooks and context",
-      "Building RESTful APIs with Node.js and Express",
-      "Database design and implementation with MongoDB",
-      "Authentication and authorization best practices",
-      "Deployment strategies and DevOps fundamentals",
-      "Testing strategies for full-stack applications",
-      "Performance optimization techniques",
-      "Security best practices",
-      "Advanced JavaScript concepts",
-      "Code organization and architecture patterns",
-    ],
-    modules: [
-      {
-        title: "Introduction to Modern Web Development",
-        lessons: 5,
-        duration: "2 hours",
-        icon: Code,
-        topics: [
-          "Course overview",
-          "Development environment setup",
-          "Modern JavaScript features",
-          "Git and version control",
-          "Project structure",
-        ],
-      },
-      {
-        title: "React Fundamentals and Advanced Patterns",
-        lessons: 8,
-        duration: "4 hours",
-        icon: Layers,
-        topics: [
-          "Components and JSX",
-          "State and props",
-          "Hooks",
-          "Context API",
-          "Performance optimization",
-          "Advanced patterns",
-        ],
-      },
-      {
-        title: "Backend Development with Node.js",
-        lessons: 6,
-        duration: "3 hours",
-        icon: Server,
-        topics: [
-          "Express.js setup",
-          "Middleware",
-          "Routing",
-          "Error handling",
-          "File uploads",
-          "Security",
-        ],
-      },
-      {
-        title: "Database Design and Integration",
-        lessons: 4,
-        duration: "2.5 hours",
-        icon: Database,
-        topics: [
-          "MongoDB setup",
-          "Mongoose ODM",
-          "Schema design",
-          "Relationships",
-          "Aggregation",
-        ],
-      },
-      {
-        title: "Authentication and Security",
-        lessons: 3,
-        duration: "2 hours",
-        icon: Shield,
-        topics: [
-          "JWT tokens",
-          "Password hashing",
-          "OAuth",
-          "Security best practices",
-        ],
-      },
-      {
-        title: "Deployment and Production",
-        lessons: 2,
-        duration: "1.5 hours",
-        icon: Globe,
-        topics: [
-          "Cloud deployment",
-          "Environment variables",
-          "Monitoring",
-          "Performance",
-        ],
-      },
-    ],
-    requirements: [
-      "Basic knowledge of HTML, CSS, and JavaScript",
-      "Understanding of programming fundamentals",
-      "Familiarity with command line/terminal",
-      "Computer with internet connection",
-    ],
-    features: [
-      { icon: Monitor, text: "12 hours of HD video content" },
-      { icon: Download, text: "Downloadable resources" },
-      { icon: Smartphone, text: "Mobile and TV access" },
-      { icon: Trophy, text: "Certificate of completion" },
-      { icon: Globe, text: "Lifetime access" },
-      { icon: Headphones, text: "24/7 student support" },
-    ],
-    reviews: [
-      {
-        id: 1,
-        name: "Ahmed Hassan",
+    {
+      id: 9,
+      title: "Web Design – Front-End",
+      subtitle:
+        "Master modern front-end web development with HTML5, CSS3, JavaScript, and React.",
+      description:
+        "This comprehensive course takes you from intermediate to advanced web development skills. You'll learn to build scalable, production-ready applications using modern technologies and best practices used by top tech companies. Perfect for aspiring developers and those looking to advance their careers in web development.",
+      image: "bg-gradient-to-br from-blue-500 to-purple-600",
+      price: { usd: "$399", egp: "6,400EGP" },
+      originalPrice: { usd: "$499", egp: "8,000EGP" },
+      discount: 20,
+      rating: 4.9,
+      reviewCount: 892,
+      students: 2431,
+      duration: "16 weeks",
+      level: "Intermediate",
+      category: "Programming & Technology",
+      language: "English",
+      subtitles: ["English", "Arabic"],
+      lastUpdated: "November 2024",
+      certificate: true,
+      featured: true,
+      startDate: "January 15, 2025",
+      instructor: {
+        name: "Alex Rodriguez",
+        title: "Senior Front-End Developer",
+        company: "Meta",
         avatar:
-          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face",
-        rating: 5,
-        comment:
-          "Excellent course! The instructor explains everything clearly and the projects are very practical.",
-        date: "2 weeks ago",
+          "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop&crop=face",
+        bio: "Alex is a senior software engineer with 8+ years of experience building scalable web applications at top tech companies. He has worked at Meta and Google, leading front-end development teams and mentoring junior developers.",
+        students: 15420,
+        courses: 8,
+        rating: 4.9,
+        experience: "8 years",
       },
-      {
-        id: 2,
-        name: "Fatima Al-Zahra",
-        avatar:
-          "https://images.unsplash.com/photo-1494790108755-2616b332c1fe?w=50&h=50&fit=crop&crop=face",
-        rating: 5,
-        comment:
-          "This course transformed my career. I got a job as a full-stack developer after completing it!",
-        date: "1 month ago",
-      },
-      {
-        id: 3,
-        name: "Mohammed Ali",
-        avatar:
-          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face",
-        rating: 4,
-        comment:
-          "Great content and well-structured. Would recommend to anyone serious about web development.",
-        date: "3 weeks ago",
-      },
-    ],
-  };
+      skills: [
+        "Modern React development with hooks and context",
+        "Advanced HTML5 and CSS3 techniques",
+        "JavaScript ES6+ features and best practices",
+        "Responsive web design principles",
+        "CSS Grid and Flexbox mastery",
+        "Component-based architecture",
+        "State management with Redux",
+        "API integration and data fetching",
+        "Performance optimization techniques",
+        "Modern development tools and workflows",
+      ],
+      modules: [
+        {
+          title: "HTML5 & CSS3 Fundamentals",
+          lessons: 8,
+          duration: "3 hours",
+          icon: Code,
+          topics: [
+            "Semantic HTML5 elements",
+            "CSS3 properties and animations",
+            "Flexbox and Grid layouts",
+            "Responsive design principles",
+            "CSS preprocessors",
+          ],
+        },
+        {
+          title: "JavaScript Mastery",
+          lessons: 12,
+          duration: "5 hours",
+          icon: Zap,
+          topics: [
+            "ES6+ features",
+            "DOM manipulation",
+            "Async/await and promises",
+            "Object-oriented programming",
+            "Functional programming concepts",
+          ],
+        },
+        {
+          title: "React Development",
+          lessons: 10,
+          duration: "4 hours",
+          icon: Layers,
+          topics: [
+            "Components and JSX",
+            "State and props",
+            "Hooks and context",
+            "Routing with React Router",
+            "Testing React components",
+          ],
+        },
+        {
+          title: "Advanced Topics",
+          lessons: 8,
+          duration: "3 hours",
+          icon: TrendingUp,
+          topics: [
+            "Performance optimization",
+            "Progressive Web Apps",
+            "Build tools and bundlers",
+            "Deployment strategies",
+          ],
+        },
+      ],
+      requirements: [
+        "Basic knowledge of HTML, CSS, and JavaScript",
+        "Understanding of programming fundamentals",
+        "Familiarity with command line/terminal",
+        "Computer with internet connection",
+      ],
+      features: [
+        { icon: Monitor, text: "15 hours of HD video content" },
+        { icon: Download, text: "Downloadable resources and code samples" },
+        { icon: Smartphone, text: "Mobile and TV access" },
+        { icon: Trophy, text: "Certificate of completion" },
+        { icon: Globe, text: "Lifetime access" },
+        { icon: Headphones, text: "24/7 student support" },
+      ],
+      reviews: [
+        {
+          id: 1,
+          name: "Sarah Ahmed",
+          avatar:
+            "https://images.unsplash.com/photo-1494790108755-2616b332c1fe?w=50&h=50&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "Excellent course! Alex explains everything clearly and the projects are very practical. I landed a front-end developer job after completing this course!",
+          date: "2 weeks ago",
+        },
+        {
+          id: 2,
+          name: "Omar Khaled",
+          avatar:
+            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face",
+          rating: 5,
+          comment:
+            "The React section was particularly helpful. The hands-on projects really solidified my understanding.",
+          date: "1 month ago",
+        },
+        {
+          id: 3,
+          name: "Nadia Hassan",
+          avatar:
+            "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop&crop=face",
+          rating: 4,
+          comment:
+            "Great content and well-structured. The instructor's industry experience really shows in the quality of the material.",
+          date: "3 weeks ago",
+        },
+      ],
+      lessons: 64,
+    },
+  ];
+
+  // Load course data based on ID
+  useEffect(() => {
+    setLoading(true);
+    if (id) {
+      const foundCourse = coursesData.find((c) => c.id === parseInt(id));
+      if (foundCourse) {
+        setCourse(foundCourse);
+      } else {
+        // If course not found, redirect to courses page
+        navigate("/courses");
+        toast({
+          title: "Course not found",
+          description: "The requested course could not be found.",
+          variant: "destructive",
+        });
+        return;
+      }
+    } else {
+      // If no ID provided, use default course (first one)
+      setCourse(coursesData[0]);
+    }
+    setLoading(false);
+  }, [id, navigate, toast]);
+
+  // Show loading state
+  if (loading || !course) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-20">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary mx-auto"></div>
+            <p className="mt-4 text-muted-foreground">
+              Loading course details...
+            </p>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   const handleEnroll = () => {
     setIsEnrolled(true);
     toast({
       title: "Successfully Enrolled! 🎉",
-      description:
-        "Welcome to the course! You can now access all course materials.",
+      description: `Welcome to ${course.title}! You can now access all course materials.`,
     });
+
+    // Here you would typically make an API call to enroll the user
+    // Example: await enrollUser(course.id)
   };
 
   const handleBookmark = () => {
@@ -266,6 +443,25 @@ export default function CourseDetails() {
       toast({
         title: "Link copied!",
         description: "Course link copied to clipboard",
+      });
+    }
+  };
+
+  const handlePreview = () => {
+    setShowPreview(true);
+    toast({
+      title: "Starting Preview",
+      description: "Enjoy a preview of this amazing course!",
+    });
+  };
+
+  const handleStartLearning = () => {
+    if (!isEnrolled) {
+      handleEnroll();
+    } else {
+      toast({
+        title: "Continuing Course",
+        description: "Redirecting to your course dashboard...",
       });
     }
   };
@@ -383,18 +579,24 @@ export default function CourseDetails() {
                       {/* Video Preview */}
                       <div
                         className={`aspect-video ${course.image} relative cursor-pointer group`}
+                        onClick={handlePreview}
                       >
                         <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-300" />
                         <div className="absolute inset-0 flex items-center justify-center">
                           <MagneticButton>
-                            <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center shadow-2xl group-hover:bg-white transition-colors duration-300">
+                            <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center shadow-2xl group-hover:bg-white transition-colors duration-300 hover:scale-110">
                               <Play className="h-8 w-8 text-primary ml-1" />
                             </div>
                           </MagneticButton>
                         </div>
                         <div className="absolute top-4 right-4">
-                          <Badge className="bg-black/50 text-white">
-                            Preview
+                          <Badge className="bg-black/50 text-white backdrop-blur-sm">
+                            {showPreview ? "Playing Preview" : "Free Preview"}
+                          </Badge>
+                        </div>
+                        <div className="absolute bottom-4 left-4">
+                          <Badge className="bg-primary text-primary-foreground">
+                            {course.duration}
                           </Badge>
                         </div>
                       </div>
@@ -429,18 +631,17 @@ export default function CourseDetails() {
                           <MagneticButton>
                             <Button
                               className="w-full h-12 btn-professional text-lg"
-                              onClick={handleEnroll}
-                              disabled={isEnrolled}
+                              onClick={handleStartLearning}
                             >
                               {isEnrolled ? (
                                 <>
-                                  <CheckCircle className="mr-2 h-5 w-5" />
-                                  {t("courseDetails.enrolled")}
+                                  <Play className="mr-2 h-5 w-5" />
+                                  Continue Learning
                                 </>
                               ) : (
                                 <>
                                   <Zap className="mr-2 h-5 w-5" />
-                                  {t("courseDetails.enroll")}
+                                  Enroll Now
                                 </>
                               )}
                             </Button>
@@ -470,32 +671,15 @@ export default function CourseDetails() {
                           <h4 className="font-semibold">
                             {t("courseDetails.includes")}
                           </h4>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Monitor className="h-4 w-4 text-primary" />
-                            <span>12 {t("courseDetails.features.video")}</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Download className="h-4 w-4 text-primary" />
-                            <span>{t("courseDetails.features.resources")}</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Smartphone className="h-4 w-4 text-primary" />
-                            <span>{t("courseDetails.features.mobile")}</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Trophy className="h-4 w-4 text-primary" />
-                            <span>
-                              {t("courseDetails.features.certificate")}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Globe className="h-4 w-4 text-primary" />
-                            <span>{t("courseDetails.features.lifetime")}</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Headphones className="h-4 w-4 text-primary" />
-                            <span>{t("courseDetails.features.support")}</span>
-                          </div>
+                          {course.features.map((feature, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center gap-3 text-sm"
+                            >
+                              <feature.icon className="h-4 w-4 text-primary" />
+                              <span>{feature.text}</span>
+                            </div>
+                          ))}
                         </div>
 
                         {/* Guarantee */}
@@ -628,6 +812,21 @@ export default function CourseDetails() {
                       {t("courseDetails.curriculum.lessons")} •{" "}
                       <CountUp end={15} /> {t("courseDetails.curriculum.hours")}
                     </p>
+                    {isEnrolled && (
+                      <div className="mt-4">
+                        <div className="max-w-md mx-auto">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm font-medium">
+                              Course Progress
+                            </span>
+                            <span className="text-sm text-muted-foreground">
+                              {progress}%
+                            </span>
+                          </div>
+                          <Progress value={progress} className="h-2" />
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <Card className="bg-card/80 backdrop-blur-sm">
