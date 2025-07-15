@@ -75,6 +75,8 @@ const GeolocationPopup = () => {
   const requestLocation = async () => {
     setIsProcessing(true);
     setShowLocationRequest(false);
+    sessionStorage.setItem("hasAskedLocation", "true");
+    setHasAskedLocation(true);
 
     const isEgypt = await detectEgypt();
 
@@ -86,6 +88,8 @@ const GeolocationPopup = () => {
     setEgyptUser(false); // Default to USD when denied
     setShowLocationRequest(false);
     setShowCurrencyReminder(true);
+    sessionStorage.setItem("hasAskedLocation", "true");
+    setHasAskedLocation(true);
   };
 
   const openLocationSettings = async () => {
