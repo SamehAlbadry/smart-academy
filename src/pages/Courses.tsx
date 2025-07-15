@@ -1332,8 +1332,15 @@ export default function Courses() {
                         <div className="mt-auto">
                           <a
                             href={`/course-details?id=${course.id}`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              window.location.href = `/course-details?id=${course.id}`;
+                            }}
                             className="w-full bg-primary hover:bg-primary/90 shadow-lg group-hover:shadow-xl transition-all duration-300 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 text-primary-foreground h-10 px-4 py-2 cursor-pointer"
-                            style={{ textDecoration: "none" }}
+                            style={{
+                              textDecoration: "none",
+                              pointerEvents: "auto",
+                            }}
                           >
                             <span>View Details</span>
                             <Play className="ml-2 h-4 w-4" />
