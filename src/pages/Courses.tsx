@@ -1032,12 +1032,6 @@ export default function Courses() {
     return matchesSearch && matchesFilter;
   });
 
-  // Debug logging
-  console.log("Total courses:", courses.length);
-  console.log("Filtered courses:", filteredCourses.length);
-  console.log("Search query:", searchQuery);
-  console.log("Filter by:", filterBy);
-
   const sortedCourses = [...filteredCourses].sort((a, b) => {
     switch (sortBy) {
       case "price-low":
