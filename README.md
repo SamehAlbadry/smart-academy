@@ -1,1 +1,1 @@
-# smart-academy
+# smart-learning-academy
