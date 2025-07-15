@@ -411,9 +411,11 @@ export default function CourseDetails() {
     setIsEnrolled(true);
     toast({
       title: "Successfully Enrolled! 🎉",
-      description:
-        "Welcome to the course! You can now access all course materials.",
+      description: `Welcome to ${course.title}! You can now access all course materials.`,
     });
+
+    // Here you would typically make an API call to enroll the user
+    // Example: await enrollUser(course.id)
   };
 
   const handleBookmark = () => {
