@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useParams } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { useI18n } from "@/lib/i18n";
 import { useStore } from "@/store/useStore";
