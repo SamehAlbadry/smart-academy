@@ -631,18 +631,17 @@ export default function CourseDetails() {
                           <MagneticButton>
                             <Button
                               className="w-full h-12 btn-professional text-lg"
-                              onClick={handleEnroll}
-                              disabled={isEnrolled}
+                              onClick={handleStartLearning}
                             >
                               {isEnrolled ? (
                                 <>
-                                  <CheckCircle className="mr-2 h-5 w-5" />
-                                  {t("courseDetails.enrolled")}
+                                  <Play className="mr-2 h-5 w-5" />
+                                  Continue Learning
                                 </>
                               ) : (
                                 <>
                                   <Zap className="mr-2 h-5 w-5" />
-                                  {t("courseDetails.enroll")}
+                                  Enroll Now
                                 </>
                               )}
                             </Button>
