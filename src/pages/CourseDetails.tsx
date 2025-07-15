@@ -812,6 +812,21 @@ export default function CourseDetails() {
                       {t("courseDetails.curriculum.lessons")} •{" "}
                       <CountUp end={15} /> {t("courseDetails.curriculum.hours")}
                     </p>
+                    {isEnrolled && (
+                      <div className="mt-4">
+                        <div className="max-w-md mx-auto">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm font-medium">
+                              Course Progress
+                            </span>
+                            <span className="text-sm text-muted-foreground">
+                              {progress}%
+                            </span>
+                          </div>
+                          <Progress value={progress} className="h-2" />
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <Card className="bg-card/80 backdrop-blur-sm">
