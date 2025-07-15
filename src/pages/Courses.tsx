@@ -873,8 +873,7 @@ export default function Courses() {
     },
     {
       id: 34,
-      title:
-        "International Marketing ��� Strategies for Global Market Expansion",
+      title: "International Marketing – Strategies for Global Market Expansion",
       description:
         "Advanced international marketing strategies for global business expansion and market entry.",
       image: "bg-gradient-to-br from-orange-600 to-red-700",
@@ -1331,13 +1330,20 @@ export default function Courses() {
 
                         {/* Action Button */}
                         <div className="mt-auto">
-                          <Button
-                            className="w-full bg-primary hover:bg-primary/90 shadow-lg group-hover:shadow-xl transition-all duration-300"
-                            onClick={() => handleViewDetails(course.id)}
+                          <Link
+                            to={`/course-details?id=${course.id}`}
+                            className="block"
                           >
-                            <span>View Details</span>
-                            <Play className="ml-2 h-4 w-4" />
-                          </Button>
+                            <Button
+                              className="w-full bg-primary hover:bg-primary/90 shadow-lg group-hover:shadow-xl transition-all duration-300"
+                              asChild
+                            >
+                              <div>
+                                <span>View Details</span>
+                                <Play className="ml-2 h-4 w-4" />
+                              </div>
+                            </Button>
+                          </Link>
                         </div>
                       </CardContent>
                     </div>
