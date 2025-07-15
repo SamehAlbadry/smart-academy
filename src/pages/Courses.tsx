@@ -1201,138 +1201,144 @@ export default function Courses() {
               itemClassName="group"
               delay={100}
             >
-                            {sortedCourses.map((course) => (
+              {sortedCourses.map((course) => (
                 <div key={course.id}>
-                  <Link to={`/course-details?id=${course.id}`} className="block h-full">
+                  <Link
+                    to={`/course-details?id=${course.id}`}
+                    className="block h-full"
+                  >
                     <Card
                       className={`course-card card-hover bg-card/80 backdrop-blur-sm border-2 border-transparent hover:border-primary/20 overflow-hidden group transition-all duration-300 cursor-pointer ${
                         viewMode === "list" ? "flex flex-row" : "h-full"
                       }`}
                     >
-                    <div
-                      className={`relative overflow-hidden ${
-                        viewMode === "list" ? "w-80 h-48 flex-shrink-0" : "h-48"
-                      } ${course.image}`}
-                    >
-                      {/* Featured Badge */}
-                      {course.featured && (
-                        <FloatingElement className="absolute top-4 left-4 z-10">
-                          <Badge className="bg-yellow-500 text-yellow-900 shadow-lg">
-                            <Sparkles className="mr-1 h-3 w-3" />
-                            Featured
+                      <div
+                        className={`relative overflow-hidden ${
+                          viewMode === "list"
+                            ? "w-80 h-48 flex-shrink-0"
+                            : "h-48"
+                        } ${course.image}`}
+                      >
+                        {/* Featured Badge */}
+                        {course.featured && (
+                          <FloatingElement className="absolute top-4 left-4 z-10">
+                            <Badge className="bg-yellow-500 text-yellow-900 shadow-lg">
+                              <Sparkles className="mr-1 h-3 w-3" />
+                              Featured
+                            </Badge>
+                          </FloatingElement>
+                        )}
+
+                        {/* Level Badge */}
+                        <FloatingElement className="absolute top-4 right-4 z-10">
+                          <Badge className="bg-white/95 text-gray-800 shadow-lg backdrop-blur-sm">
+                            {course.level}
                           </Badge>
                         </FloatingElement>
-                      )}
 
-                      {/* Level Badge */}
-                      <FloatingElement className="absolute top-4 right-4 z-10">
-                        <Badge className="bg-white/95 text-gray-800 shadow-lg backdrop-blur-sm">
-                          {course.level}
-                        </Badge>
-                      </FloatingElement>
-
-                      {/* Category Badge */}
-                      <div className="absolute bottom-4 left-4 z-10">
-                        <Badge className="bg-primary text-primary-foreground">
-                          {course.category}
-                        </Badge>
-                      </div>
-
-                      {/* Price */}
-                      <div className="absolute bottom-4 right-4 z-10">
-                        <div className="text-white font-bold text-lg bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-lg">
-                          <span className="text-lg font-bold">
-                            {isEgyptUser === true
-                              ? course.price.egp
-                              : course.price.usd}
-                          </span>
-                          <span className="text-sm line-through opacity-60 ml-2">
-                            {isEgyptUser === true
-                              ? course.originalPrice.egp
-                              : course.originalPrice.usd}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/80 transition-all duration-500" />
-                    </div>
-
-                    <div
-                      className={`${
-                        viewMode === "list" ? "flex-1" : ""
-                      } flex flex-col`}
-                    >
-                      <CardHeader className="pb-4">
-                        <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors duration-300">
-                          {course.title}
-                        </CardTitle>
-                        <p className="text-muted-foreground text-sm line-clamp-2">
-                          {course.description}
-                        </p>
-                      </CardHeader>
-
-                      <CardContent className="space-y-4 flex-1 flex flex-col">
-                        {/* Instructor Information */}
-                        <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
-                          <Avatar className="w-10 h-10">
-                            <AvatarImage
-                              src={course.instructor.avatar}
-                              alt={course.instructor.name}
-                            />
-                            <AvatarFallback>
-                              <User className="h-5 w-5" />
-                            </AvatarFallback>
-                          </Avatar>
-                          <div className="flex-1 min-w-0">
-                            <p className="font-medium text-sm truncate">
-                              {course.instructor.name}
-                            </p>
-                            <p className="text-xs text-muted-foreground truncate">
-                              {course.instructor.title}
-                            </p>
-                            <p className="text-xs text-primary font-medium">
-                              <Calendar className="inline h-3 w-3 mr-1" />
-                              {course.instructor.experience} experience
-                            </p>
-                          </div>
+                        {/* Category Badge */}
+                        <div className="absolute bottom-4 left-4 z-10">
+                          <Badge className="bg-primary text-primary-foreground">
+                            {course.category}
+                          </Badge>
                         </div>
 
-                        {/* Course Stats */}
-                        <div className="grid grid-cols-3 gap-4 text-sm">
-                          <div className="flex items-center gap-1 text-muted-foreground">
-                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                            <span className="font-medium">{course.rating}</span>
-                          </div>
-                          <div className="flex items-center gap-1 text-muted-foreground">
-                            <Users className="h-4 w-4" />
-                            <span className="font-medium">
-                              {course.students.toLocaleString()}
+                        {/* Price */}
+                        <div className="absolute bottom-4 right-4 z-10">
+                          <div className="text-white font-bold text-lg bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-lg">
+                            <span className="text-lg font-bold">
+                              {isEgyptUser === true
+                                ? course.price.egp
+                                : course.price.usd}
                             </span>
-                          </div>
-                          <div className="flex items-center gap-1 text-muted-foreground">
-                            <Clock className="h-4 w-4" />
-                            <span className="font-medium">
-                              {course.duration}
+                            <span className="text-sm line-through opacity-60 ml-2">
+                              {isEgyptUser === true
+                                ? course.originalPrice.egp
+                                : course.originalPrice.usd}
                             </span>
                           </div>
                         </div>
 
-                        {/* Course Details */}
-                        <div className="flex items-center justify-between text-sm text-muted-foreground">
-                          <span>{course.lessons} lessons</span>
-                          {course.certificate && (
-                            <div className="flex items-center gap-1">
-                              <Award className="h-4 w-4" />
-                              <span>Certificate</span>
+                        {/* Gradient overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/80 transition-all duration-500" />
+                      </div>
+
+                      <div
+                        className={`${
+                          viewMode === "list" ? "flex-1" : ""
+                        } flex flex-col`}
+                      >
+                        <CardHeader className="pb-4">
+                          <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors duration-300">
+                            {course.title}
+                          </CardTitle>
+                          <p className="text-muted-foreground text-sm line-clamp-2">
+                            {course.description}
+                          </p>
+                        </CardHeader>
+
+                        <CardContent className="space-y-4 flex-1 flex flex-col">
+                          {/* Instructor Information */}
+                          <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
+                            <Avatar className="w-10 h-10">
+                              <AvatarImage
+                                src={course.instructor.avatar}
+                                alt={course.instructor.name}
+                              />
+                              <AvatarFallback>
+                                <User className="h-5 w-5" />
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1 min-w-0">
+                              <p className="font-medium text-sm truncate">
+                                {course.instructor.name}
+                              </p>
+                              <p className="text-xs text-muted-foreground truncate">
+                                {course.instructor.title}
+                              </p>
+                              <p className="text-xs text-primary font-medium">
+                                <Calendar className="inline h-3 w-3 mr-1" />
+                                {course.instructor.experience} experience
+                              </p>
                             </div>
-                          )}
-                        </div>
+                          </div>
 
-                        
-                      </CardContent>
-                    </div>
-                  </Card>
+                          {/* Course Stats */}
+                          <div className="grid grid-cols-3 gap-4 text-sm">
+                            <div className="flex items-center gap-1 text-muted-foreground">
+                              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                              <span className="font-medium">
+                                {course.rating}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1 text-muted-foreground">
+                              <Users className="h-4 w-4" />
+                              <span className="font-medium">
+                                {course.students.toLocaleString()}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1 text-muted-foreground">
+                              <Clock className="h-4 w-4" />
+                              <span className="font-medium">
+                                {course.duration}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Course Details */}
+                          <div className="flex items-center justify-between text-sm text-muted-foreground">
+                            <span>{course.lessons} lessons</span>
+                            {course.certificate && (
+                              <div className="flex items-center gap-1">
+                                <Award className="h-4 w-4" />
+                                <span>Certificate</span>
+                              </div>
+                            )}
+                          </div>
+                        </CardContent>
+                      </div>
+                    </Card>
+                  </Link>
                 </div>
               ))}
             </StaggeredList>
