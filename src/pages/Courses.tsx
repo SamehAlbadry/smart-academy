@@ -1158,7 +1158,7 @@ export default function Courses() {
 
               <div className="flex items-center justify-between">
                 <p className="text-sm text-muted-foreground">
-                  {t("courses.results", { count: sortedCourses.length })}
+                  Showing {sortedCourses.length} of {courses.length} courses
                 </p>
                 <div className="flex items-center gap-2">
                   <Button
