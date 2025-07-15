@@ -308,7 +308,7 @@ html[lang="ar"] * {
 
   /* Enhanced card hover effects */
   .card-hover {
-    @apply transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02];
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:scale-[1.01];
     transform-origin: center;
   }
 
