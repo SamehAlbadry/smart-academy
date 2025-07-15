@@ -559,6 +559,94 @@ export default function CourseDetails() {
           ],
         },
       ];
+    } else if (courseId === "10") {
+      return [
+        {
+          title: "Python Fundamentals",
+          lessons: 8,
+          duration: "4 hours",
+          icon: Code,
+          topics: [
+            "Python syntax and basics",
+            "Variables and data types",
+            "Control structures",
+            "Functions and modules",
+            "Object-oriented programming",
+            "Error handling",
+          ],
+        },
+        {
+          title: "Django Backend Development",
+          lessons: 10,
+          duration: "5 hours",
+          icon: Server,
+          topics: [
+            "Django project setup",
+            "Models and databases",
+            "Views and URLs",
+            "Django REST Framework",
+            "Authentication system",
+            "API development",
+          ],
+        },
+        {
+          title: "React Frontend Integration",
+          lessons: 8,
+          duration: "4 hours",
+          icon: Layers,
+          topics: [
+            "React components",
+            "State management",
+            "API integration",
+            "Routing",
+            "UI/UX best practices",
+            "Testing frontend",
+          ],
+        },
+      ];
+    } else if (courseId === "23") {
+      return [
+        {
+          title: "Art Basics for Kids",
+          lessons: 6,
+          duration: "2 hours",
+          icon: Code,
+          topics: [
+            "Drawing shapes and lines",
+            "Understanding colors",
+            "Basic painting techniques",
+            "Using different art tools",
+            "Creative warm-up exercises",
+            "Art safety rules",
+          ],
+        },
+        {
+          title: "Fun Craft Projects",
+          lessons: 8,
+          duration: "3 hours",
+          icon: Layers,
+          topics: [
+            "Paper crafts and origami",
+            "Collage and mixed media",
+            "Nature crafts",
+            "Holiday decorations",
+            "3D art projects",
+            "Recycled art creations",
+          ],
+        },
+        {
+          title: "Digital Art for Kids",
+          lessons: 4,
+          duration: "1.5 hours",
+          icon: Monitor,
+          topics: [
+            "Introduction to digital drawing",
+            "Using art apps on tablets",
+            "Creating digital stories",
+            "Sharing artwork safely online",
+          ],
+        },
+      ];
     } else {
       return [
         {
