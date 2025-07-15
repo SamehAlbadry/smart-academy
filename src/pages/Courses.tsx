@@ -1337,22 +1337,6 @@ export default function Courses() {
               ))}
             </StaggeredList>
           </AnimatedSection>
-
-          {/* Load More Button */}
-          {sortedCourses.length > 6 && (
-            <AnimatedSection
-              animation="fade-up"
-              delay={600}
-              className="text-center mt-16"
-            >
-              <MagneticButton>
-                <Button size="lg" variant="outline" className="px-8">
-                  {t("courses.loadMore")}
-                  <ChevronDown className="ml-2 h-5 w-5" />
-                </Button>
-              </MagneticButton>
-            </AnimatedSection>
-          )}
         </div>
       </section>
     </Layout>
