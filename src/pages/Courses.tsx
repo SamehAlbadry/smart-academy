@@ -1049,7 +1049,10 @@ export default function Courses() {
       case "students":
         return b.students - a.students;
       default:
-        return b.featured ? 1 : -1;
+        // Show featured courses first, then sort by students count
+        if (a.featured && !b.featured) return -1;
+        if (!a.featured && b.featured) return 1;
+        return b.students - a.students;
     }
   });
 
