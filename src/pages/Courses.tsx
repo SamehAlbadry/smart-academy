@@ -1188,8 +1188,8 @@ export default function Courses() {
               itemClassName="group"
               delay={100}
             >
-              {sortedCourses.map((course) => (
-                <MagneticButton key={course.id} intensity={8}>
+                            {sortedCourses.map((course) => (
+                <div key={course.id}>
                   <Card
                     className={`course-card card-hover bg-card/80 backdrop-blur-sm border-2 border-transparent hover:border-primary/20 overflow-hidden group transition-all duration-300 ${
                       viewMode === "list" ? "flex flex-row" : "h-full"
