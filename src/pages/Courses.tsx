@@ -1322,12 +1322,13 @@ export default function Courses() {
 
                         {/* Action Button */}
                         <div className="mt-auto">
-                          <Link to={`/course-details?id=${course.id}`}>
-                            <Button className="w-full bg-primary hover:bg-primary/90 shadow-lg group-hover:shadow-xl transition-all duration-300">
-                              <span>View Details</span>
-                              <Play className="ml-2 h-4 w-4" />
-                            </Button>
-                          </Link>
+                          <Button
+                            className="w-full bg-primary hover:bg-primary/90 shadow-lg group-hover:shadow-xl transition-all duration-300"
+                            onClick={() => handleViewDetails(course.id)}
+                          >
+                            <span>View Details</span>
+                            <Play className="ml-2 h-4 w-4" />
+                          </Button>
                         </div>
                       </CardContent>
                     </div>
