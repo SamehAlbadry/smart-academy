@@ -873,7 +873,8 @@ export default function Courses() {
     },
     {
       id: 34,
-      title: "International Marketing – Strategies for Global Market Expansion",
+      title:
+        "International Marketing ��� Strategies for Global Market Expansion",
       description:
         "Advanced international marketing strategies for global business expansion and market entry.",
       image: "bg-gradient-to-br from-orange-600 to-red-700",
@@ -1034,7 +1035,15 @@ export default function Courses() {
   });
 
   const handleViewDetails = (courseId: number) => {
-    navigate(`/course-details?id=${courseId}`);
+    console.log("Attempting to navigate to course:", courseId);
+
+    try {
+      navigate(`/course-details?id=${courseId}`);
+    } catch (error) {
+      console.error("Navigation failed, using window.location:", error);
+      // Fallback to window.location
+      window.location.href = `/course-details?id=${courseId}`;
+    }
   };
 
   const sortedCourses = [...filteredCourses].sort((a, b) => {
