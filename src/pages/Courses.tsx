@@ -1341,14 +1341,14 @@ export default function Courses() {
                       </div>
 
                       {/* Action Button */}
-                      <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                      <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
                         <Link
                           to={`/course-details/${course.id}`}
                           className="block"
                         >
-                          <Button className="w-full h-12 text-base font-semibold bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300 group/btn">
+                          <Button className="w-full h-12 text-base font-semibold bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 shadow-lg hover:shadow-xl transition-all duration-300 group/btn border-0 rounded-lg">
                             <span>View Details</span>
-                            <Play className="ml-2 h-5 w-5 group-hover/btn:translate-x-1 transition-transform" />
+                            <Play className="ml-2 h-5 w-5 group-hover/btn:translate-x-1 transition-transform duration-300" />
                           </Button>
                         </Link>
                       </div>
