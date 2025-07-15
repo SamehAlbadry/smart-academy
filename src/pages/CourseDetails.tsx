@@ -62,15 +62,17 @@ export default function CourseDetails() {
   const courseId = searchParams.get("id");
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
-    const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState("overview");
 
   // Sample courses data - in a real app, this would come from an API
   const coursesData = {
     "1": {
       id: 1,
       title: "French Course",
-      subtitle: "Comprehensive French language course from beginner to intermediate level with native speakers",
-      description: "This comprehensive French course takes you from complete beginner to intermediate level. You'll learn practical conversation skills, proper grammar, and cultural insights that will help you communicate effectively in French-speaking countries. Our native French speakers will guide you through interactive lessons and real-world scenarios.",
+      subtitle:
+        "Comprehensive French language course from beginner to intermediate level with native speakers",
+      description:
+        "This comprehensive French course takes you from complete beginner to intermediate level. You'll learn practical conversation skills, proper grammar, and cultural insights that will help you communicate effectively in French-speaking countries. Our native French speakers will guide you through interactive lessons and real-world scenarios.",
       image: "bg-gradient-to-br from-blue-500 to-indigo-600",
       price: { usd: "$299", egp: "4,800EGP" },
       originalPrice: { usd: "$399", egp: "6,400EGP" },
@@ -91,7 +93,8 @@ export default function CourseDetails() {
         name: "Marie Dubois",
         title: "French Language Specialist",
         company: "Sorbonne University",
-        avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b788?w=150&h=150&fit=crop&crop=face",
+        avatar:
+          "https://images.unsplash.com/photo-1494790108755-2616b612b788?w=150&h=150&fit=crop&crop=face",
         bio: "Marie is a native French speaker with over 8 years of experience teaching French to international students. She holds a Master's degree in French Literature and has helped thousands of students achieve fluency.",
         students: 8420,
         courses: 5,
@@ -117,8 +120,10 @@ export default function CourseDetails() {
     "9": {
       id: 9,
       title: "Web Design – Front-End",
-      subtitle: "Master modern front-end web development with HTML5, CSS3, JavaScript, and React",
-      description: "This comprehensive course takes you from intermediate to advanced web development skills. You'll learn to build scalable, production-ready applications using modern technologies and best practices used by top tech companies.",
+      subtitle:
+        "Master modern front-end web development with HTML5, CSS3, JavaScript, and React",
+      description:
+        "This comprehensive course takes you from intermediate to advanced web development skills. You'll learn to build scalable, production-ready applications using modern technologies and best practices used by top tech companies.",
       image: "bg-gradient-to-br from-blue-500 to-purple-600",
       price: { usd: "$399", egp: "6,400EGP" },
       originalPrice: { usd: "$499", egp: "8,000EGP" },
@@ -139,7 +144,8 @@ export default function CourseDetails() {
         name: "Alex Rodriguez",
         title: "Senior Front-End Developer",
         company: "Google",
-        avatar: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop&crop=face",
+        avatar:
+          "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop&crop=face",
         bio: "Alex is a senior software engineer with 8+ years of experience building scalable web applications. He has worked at top tech companies and taught thousands of students worldwide.",
         students: 15420,
         courses: 8,
@@ -166,7 +172,7 @@ export default function CourseDetails() {
     },
   };
 
-    // Add modules data for courses
+  // Add modules data for courses
   const getModulesForCourse = (courseId) => {
     if (courseId === "1") {
       return [
@@ -265,7 +271,8 @@ export default function CourseDetails() {
     id: 1,
     title: "Course Not Found",
     subtitle: "The requested course could not be found",
-    description: "Please return to the courses page to browse available courses.",
+    description:
+      "Please return to the courses page to browse available courses.",
     image: "bg-gradient-to-br from-gray-500 to-gray-600",
     price: { usd: "$0", egp: "0 EGP" },
     originalPrice: { usd: "$0", egp: "0 EGP" },
@@ -292,8 +299,8 @@ export default function CourseDetails() {
       courses: 0,
       rating: 0,
     },
-        skills: ["Course not available"],
-        requirements: ["Course not available"],
+    skills: ["Course not available"],
+    requirements: ["Course not available"],
   };
 
   // Add modules to the course object
@@ -301,46 +308,46 @@ export default function CourseDetails() {
 
   // Course features and reviews data
   const courseFeatures = [
-      { icon: Monitor, text: "12 hours of HD video content" },
-      { icon: Download, text: "Downloadable resources" },
-      { icon: Smartphone, text: "Mobile and TV access" },
-      { icon: Trophy, text: "Certificate of completion" },
-      { icon: Globe, text: "Lifetime access" },
-      { icon: Headphones, text: "24/7 student support" },
-    ],
-    reviews: [
-      {
-        id: 1,
-        name: "Ahmed Hassan",
-        avatar:
-          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face",
-        rating: 5,
-        comment:
-          "Excellent course! The instructor explains everything clearly and the projects are very practical.",
-        date: "2 weeks ago",
-      },
-      {
-        id: 2,
-        name: "Fatima Al-Zahra",
-        avatar:
-          "https://images.unsplash.com/photo-1494790108755-2616b332c1fe?w=50&h=50&fit=crop&crop=face",
-        rating: 5,
-        comment:
-          "This course transformed my career. I got a job as a full-stack developer after completing it!",
-        date: "1 month ago",
-      },
-      {
-        id: 3,
-        name: "Mohammed Ali",
-        avatar:
-          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face",
-        rating: 4,
-        comment:
-          "Great content and well-structured. Would recommend to anyone serious about web development.",
-        date: "3 weeks ago",
-      },
-    ],
-  };
+    { icon: Monitor, text: "12 hours of HD video content" },
+    { icon: Download, text: "Downloadable resources" },
+    { icon: Smartphone, text: "Mobile and TV access" },
+    { icon: Trophy, text: "Certificate of completion" },
+    { icon: Globe, text: "Lifetime access" },
+    { icon: Headphones, text: "24/7 student support" },
+  ];
+
+  const courseReviews = [
+    {
+      id: 1,
+      name: "Ahmed Hassan",
+      avatar:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face",
+      rating: 5,
+      comment:
+        "Excellent course! The instructor explains everything clearly and the projects are very practical.",
+      date: "2 weeks ago",
+    },
+    {
+      id: 2,
+      name: "Fatima Al-Zahra",
+      avatar:
+        "https://images.unsplash.com/photo-1494790108755-2616b332c1fe?w=50&h=50&fit=crop&crop=face",
+      rating: 5,
+      comment:
+        "This course transformed my career. I got a job as a full-stack developer after completing it!",
+      date: "1 month ago",
+    },
+    {
+      id: 3,
+      name: "Mohammed Ali",
+      avatar:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face",
+      rating: 4,
+      comment:
+        "Great content and well-structured. Would recommend to anyone serious about web development.",
+      date: "3 weeks ago",
+    },
+  ];
 
   const handleEnroll = () => {
     setIsEnrolled(true);
@@ -393,15 +400,17 @@ export default function CourseDetails() {
               <div className="lg:col-span-2">
                 <AnimatedSection animation="fade-up">
                   <div className="flex items-center gap-4 mb-6">
-                    <Badge className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-4 py-2">
-                      <Sparkles className="mr-2 h-4 w-4" />
-                      {t("courseDetails.badge.featured")}
+                    {course.featured && (
+                      <Badge className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-4 py-2">
+                        <Sparkles className="mr-2 h-4 w-4" />
+                        Featured
+                      </Badge>
+                    )}
+                    <Badge variant="outline" className="px-4 py-2">
+                      {course.level}
                     </Badge>
                     <Badge variant="outline" className="px-4 py-2">
-                      {t("courses.level.advanced")}
-                    </Badge>
-                    <Badge variant="outline" className="px-4 py-2">
-                      {t("courses.category.development")}
+                      {course.category}
                     </Badge>
                   </div>
 
@@ -419,8 +428,7 @@ export default function CourseDetails() {
                       <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
                       <span className="font-semibold">{course.rating}</span>
                       <span className="text-muted-foreground">
-                        ({course.reviewCount.toLocaleString()}{" "}
-                        {t("courseDetails.reviews")})
+                        ({course.reviewCount.toLocaleString()} reviews)
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -428,9 +436,7 @@ export default function CourseDetails() {
                       <span className="font-semibold">
                         {course.students.toLocaleString()}
                       </span>
-                      <span className="text-muted-foreground">
-                        {t("courseDetails.students")}
-                      </span>
+                      <span className="text-muted-foreground">students</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Clock className="h-5 w-5 text-primary" />
@@ -455,23 +461,19 @@ export default function CourseDetails() {
                     </Avatar>
                     <div>
                       <p className="text-sm text-muted-foreground">
-                        {t("courseDetails.instructor")}
+                        Instructor
                       </p>
                       <h3 className="text-lg font-semibold">
                         {course.instructor.name}
                       </h3>
                       <p className="text-sm text-muted-foreground">
-                        {course.instructor.title} {t("common.at")}{" "}
-                        {course.instructor.company}
+                        {course.instructor.title} at {course.instructor.company}
                       </p>
                       <div className="flex items-center gap-4 mt-2 text-sm">
                         <span>
-                          {course.instructor.students.toLocaleString()}{" "}
-                          {t("courseDetails.students")}
+                          {course.instructor.students.toLocaleString()} students
                         </span>
-                        <span>
-                          {course.instructor.courses} {t("nav.courses")}
-                        </span>
+                        <span>{course.instructor.courses} courses</span>
                         <div className="flex items-center gap-1">
                           <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                           <span>{course.instructor.rating}</span>
@@ -520,14 +522,14 @@ export default function CourseDetails() {
                                 ? course.originalPrice.egp
                                 : course.originalPrice.usd}
                             </span>
-                            <Badge className="bg-red-500 text-white">
-                              {course.discount}%{" "}
-                              {t("courseDetails.price.discount")}
-                            </Badge>
+                            {course.discount > 0 && (
+                              <Badge className="bg-red-500 text-white">
+                                {course.discount}% OFF
+                              </Badge>
+                            )}
                           </div>
                           <p className="text-sm text-muted-foreground">
-                            {t("courseDetails.price.payment")} •{" "}
-                            {t("courseDetails.price.access")}
+                            One-time payment • Lifetime access
                           </p>
                         </div>
 
@@ -542,12 +544,12 @@ export default function CourseDetails() {
                               {isEnrolled ? (
                                 <>
                                   <CheckCircle className="mr-2 h-5 w-5" />
-                                  {t("courseDetails.enrolled")}
+                                  Enrolled
                                 </>
                               ) : (
                                 <>
                                   <Zap className="mr-2 h-5 w-5" />
-                                  {t("courseDetails.enroll")}
+                                  Enroll Now
                                 </>
                               )}
                             </Button>
@@ -562,9 +564,7 @@ export default function CourseDetails() {
                               <Bookmark
                                 className={`mr-2 h-4 w-4 ${isBookmarked ? "fill-current" : ""}`}
                               />
-                              {isBookmarked
-                                ? t("courseDetails.saved")
-                                : t("courseDetails.save")}
+                              {isBookmarked ? "Saved" : "Save"}
                             </Button>
                             <Button variant="outline" onClick={handleShare}>
                               <Share2 className="h-4 w-4" />
@@ -575,34 +575,17 @@ export default function CourseDetails() {
                         {/* Course Features */}
                         <div className="space-y-3">
                           <h4 className="font-semibold">
-                            {t("courseDetails.includes")}
+                            This course includes:
                           </h4>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Monitor className="h-4 w-4 text-primary" />
-                            <span>12 {t("courseDetails.features.video")}</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Download className="h-4 w-4 text-primary" />
-                            <span>{t("courseDetails.features.resources")}</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Smartphone className="h-4 w-4 text-primary" />
-                            <span>{t("courseDetails.features.mobile")}</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Trophy className="h-4 w-4 text-primary" />
-                            <span>
-                              {t("courseDetails.features.certificate")}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Globe className="h-4 w-4 text-primary" />
-                            <span>{t("courseDetails.features.lifetime")}</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Headphones className="h-4 w-4 text-primary" />
-                            <span>{t("courseDetails.features.support")}</span>
-                          </div>
+                          {courseFeatures.map((feature, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center gap-3 text-sm"
+                            >
+                              <feature.icon className="h-4 w-4 text-primary" />
+                              <span>{feature.text}</span>
+                            </div>
+                          ))}
                         </div>
 
                         {/* Guarantee */}
@@ -610,7 +593,7 @@ export default function CourseDetails() {
                           <div className="flex items-center gap-2 text-green-700 dark:text-green-400">
                             <Shield className="h-4 w-4" />
                             <span className="text-sm font-medium">
-                              {t("courseDetails.guarantee")}
+                              30-day money-back guarantee
                             </span>
                           </div>
                         </div>
@@ -634,18 +617,10 @@ export default function CourseDetails() {
               className="w-full"
             >
               <TabsList className="grid w-full grid-cols-4 mb-12">
-                <TabsTrigger value="overview">
-                  {t("courseDetails.tabs.overview")}
-                </TabsTrigger>
-                <TabsTrigger value="curriculum">
-                  {t("courseDetails.tabs.curriculum")}
-                </TabsTrigger>
-                <TabsTrigger value="instructor">
-                  {t("courseDetails.tabs.instructor")}
-                </TabsTrigger>
-                <TabsTrigger value="reviews">
-                  {t("courseDetails.tabs.reviews")}
-                </TabsTrigger>
+                <TabsTrigger value="overview">Overview</TabsTrigger>
+                <TabsTrigger value="curriculum">Curriculum</TabsTrigger>
+                <TabsTrigger value="instructor">Instructor</TabsTrigger>
+                <TabsTrigger value="reviews">Reviews</TabsTrigger>
               </TabsList>
 
               <TabsContent value="overview" className="space-y-12">
@@ -655,7 +630,7 @@ export default function CourseDetails() {
                     <CardHeader>
                       <CardTitle className="text-2xl flex items-center gap-2">
                         <Target className="h-6 w-6 text-primary" />
-                        {t("courseDetails.learn.title")}
+                        What you'll learn
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -686,7 +661,7 @@ export default function CourseDetails() {
                     <CardHeader>
                       <CardTitle className="text-2xl flex items-center gap-2">
                         <BookOpen className="h-6 w-6 text-primary" />
-                        {t("courseDetails.requirements.title")}
+                        Requirements
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -706,9 +681,7 @@ export default function CourseDetails() {
                 <AnimatedSection animation="fade-up" delay={400}>
                   <Card className="bg-card/80 backdrop-blur-sm">
                     <CardHeader>
-                      <CardTitle className="text-2xl">
-                        {t("courseDetails.description.title")}
-                      </CardTitle>
+                      <CardTitle className="text-2xl">Description</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <p className="text-muted-foreground leading-relaxed text-lg">
@@ -723,7 +696,7 @@ export default function CourseDetails() {
                 <AnimatedSection animation="fade-up">
                   <div className="text-center mb-12">
                     <h2 className="text-3xl font-bold mb-4">
-                      {t("courseDetails.curriculum.title")}
+                      Course Curriculum
                     </h2>
                     <p className="text-xl text-muted-foreground">
                       <CountUp
@@ -732,8 +705,7 @@ export default function CourseDetails() {
                           0,
                         )}
                       />{" "}
-                      {t("courseDetails.curriculum.lessons")} •{" "}
-                      <CountUp end={15} /> {t("courseDetails.curriculum.hours")}
+                      lessons • <CountUp end={15} /> hours
                     </p>
                   </div>
 
@@ -854,22 +826,39 @@ export default function CourseDetails() {
                           <div className="space-y-4">
                             <h4 className="font-semibold">Expertise</h4>
                             <div className="flex flex-wrap gap-2">
-                              {[
-                                "React",
-                                "Node.js",
-                                "MongoDB",
-                                "JavaScript",
-                                "Python",
-                                "AWS",
-                              ].map((skill) => (
-                                <Badge
-                                  key={skill}
-                                  variant="secondary"
-                                  className="px-3 py-1"
-                                >
-                                  {skill}
-                                </Badge>
-                              ))}
+                              {courseId === "1"
+                                ? [
+                                    "French",
+                                    "Language Teaching",
+                                    "Culture",
+                                    "Pronunciation",
+                                    "Grammar",
+                                    "Conversation",
+                                  ].map((skill) => (
+                                    <Badge
+                                      key={skill}
+                                      variant="secondary"
+                                      className="px-3 py-1"
+                                    >
+                                      {skill}
+                                    </Badge>
+                                  ))
+                                : [
+                                    "React",
+                                    "Node.js",
+                                    "JavaScript",
+                                    "HTML5",
+                                    "CSS3",
+                                    "Git",
+                                  ].map((skill) => (
+                                    <Badge
+                                      key={skill}
+                                      variant="secondary"
+                                      className="px-3 py-1"
+                                    >
+                                      {skill}
+                                    </Badge>
+                                  ))}
                             </div>
                           </div>
                         </div>
@@ -906,7 +895,7 @@ export default function CourseDetails() {
                     itemClassName="group"
                     delay={150}
                   >
-                    {course.reviews.map((review) => (
+                    {courseReviews.map((review) => (
                       <Card
                         key={review.id}
                         className="bg-card/80 backdrop-blur-sm hover:bg-card transition-colors duration-300"
@@ -965,10 +954,11 @@ export default function CourseDetails() {
         <div className="container mx-auto px-4 text-center relative">
           <AnimatedSection animation="scale-in">
             <h2 className="text-4xl font-bold mb-6">
-              {t("courseDetails.cta.title")}
+              Ready to start learning?
             </h2>
             <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-              {t("courseDetails.cta.subtitle")}
+              Join thousands of students who have already transformed their
+              careers with this course.
             </p>
             <MagneticButton>
               <Button
@@ -977,7 +967,7 @@ export default function CourseDetails() {
                 onClick={handleEnroll}
               >
                 <Sparkles className="mr-2 h-5 w-5" />
-                {t("courseDetails.enroll")} -{" "}
+                Enroll Now -{" "}
                 {isEgyptUser === true ? course.price.egp : course.price.usd}
               </Button>
             </MagneticButton>
