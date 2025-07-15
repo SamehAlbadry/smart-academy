@@ -41,6 +41,7 @@ import {
 
 export default function Courses() {
   const { t } = useI18n();
+  const navigate = useNavigate();
   const isEgyptUser = useStore((state) => state.isEgyptUser);
   const [searchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
