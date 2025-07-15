@@ -1179,12 +1179,14 @@ export default function Courses() {
 
           {/* Courses Grid */}
           <AnimatedSection animation="fade-up" delay={400} className="mt-16">
-                        <div className={`grid gap-6 ${
-              viewMode === "grid"
-                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3"
-                : "grid-cols-1 max-w-4xl mx-auto"
-            }`}>
-                            {sortedCourses.map((course) => (
+            <div
+              className={`grid gap-6 ${
+                viewMode === "grid"
+                  ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3"
+                  : "grid-cols-1 max-w-4xl mx-auto"
+              }`}
+            >
+              {sortedCourses.map((course) => (
                 <div key={course.id} className="group cursor-pointer">
                   <Card className="h-full bg-white dark:bg-gray-900 border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden rounded-xl group-hover:-translate-y-2">
                     {/* Course Image Section */}
@@ -1211,10 +1213,14 @@ export default function Courses() {
                       <div className="absolute top-4 right-4">
                         <div className="bg-black/70 backdrop-blur-md text-white px-3 py-2 rounded-lg">
                           <div className="text-xl font-bold">
-                            {isEgyptUser === true ? course.price.egp : course.price.usd}
+                            {isEgyptUser === true
+                              ? course.price.egp
+                              : course.price.usd}
                           </div>
                           <div className="text-xs line-through opacity-70">
-                            {isEgyptUser === true ? course.originalPrice.egp : course.originalPrice.usd}
+                            {isEgyptUser === true
+                              ? course.originalPrice.egp
+                              : course.originalPrice.usd}
                           </div>
                         </div>
                       </div>
@@ -1250,7 +1256,10 @@ export default function Courses() {
                       {/* Instructor */}
                       <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                         <Avatar className="h-12 w-12 ring-2 ring-primary/20">
-                          <AvatarImage src={course.instructor.avatar} alt={course.instructor.name} />
+                          <AvatarImage
+                            src={course.instructor.avatar}
+                            alt={course.instructor.name}
+                          />
                           <AvatarFallback className="bg-primary/10 text-primary font-semibold">
                             {course.instructor.name.charAt(0)}
                           </AvatarFallback>
@@ -1277,7 +1286,9 @@ export default function Courses() {
                           <div className="text-sm font-bold text-gray-900 dark:text-white">
                             {course.rating}
                           </div>
-                          <div className="text-xs text-gray-600 dark:text-gray-400">Rating</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">
+                            Rating
+                          </div>
                         </div>
 
                         <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
@@ -1285,9 +1296,13 @@ export default function Courses() {
                             <Users className="h-4 w-4 text-blue-600" />
                           </div>
                           <div className="text-sm font-bold text-gray-900 dark:text-white">
-                            {course.students > 1000 ? `${(course.students/1000).toFixed(1)}k` : course.students}
+                            {course.students > 1000
+                              ? `${(course.students / 1000).toFixed(1)}k`
+                              : course.students}
                           </div>
-                          <div className="text-xs text-gray-600 dark:text-gray-400">Students</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">
+                            Students
+                          </div>
                         </div>
 
                         <div className="text-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
@@ -1297,7 +1312,9 @@ export default function Courses() {
                           <div className="text-sm font-bold text-gray-900 dark:text-white">
                             {course.lessons}
                           </div>
-                          <div className="text-xs text-gray-600 dark:text-gray-400">Lessons</div>
+                          <div className="text-xs text-gray-600 dark:text-gray-400">
+                            Lessons
+                          </div>
                         </div>
                       </div>
 
@@ -1306,7 +1323,9 @@ export default function Courses() {
                         {course.certificate && (
                           <div className="flex items-center gap-1 text-green-600 dark:text-green-400">
                             <Award className="h-4 w-4" />
-                            <span className="text-sm font-medium">Certificate</span>
+                            <span className="text-sm font-medium">
+                              Certificate
+                            </span>
                           </div>
                         )}
                         <div className="flex items-center gap-1 text-primary">
@@ -1317,7 +1336,10 @@ export default function Courses() {
 
                       {/* Action Button */}
                       <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                        <Link to={`/course-details/${course.id}`} className="block">
+                        <Link
+                          to={`/course-details/${course.id}`}
+                          className="block"
+                        >
                           <Button className="w-full h-12 text-base font-semibold bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300 group/btn">
                             <span>View Details</span>
                             <Play className="ml-2 h-5 w-5 group-hover/btn:translate-x-1 transition-transform" />
@@ -1328,7 +1350,7 @@ export default function Courses() {
                   </Card>
                 </div>
               ))}
-            </StaggeredList>
+            </div>
           </AnimatedSection>
 
           {/* Load More Button */}
