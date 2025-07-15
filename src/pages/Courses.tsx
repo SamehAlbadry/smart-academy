@@ -1188,7 +1188,7 @@ export default function Courses() {
               itemClassName="group"
               delay={100}
             >
-                            {sortedCourses.map((course) => (
+              {sortedCourses.map((course) => (
                 <div key={course.id}>
                   <Card
                     className={`course-card card-hover bg-card/80 backdrop-blur-sm border-2 border-transparent hover:border-primary/20 overflow-hidden group transition-all duration-300 ${
@@ -1328,7 +1328,7 @@ export default function Courses() {
                       </CardContent>
                     </div>
                   </Card>
-                </MagneticButton>
+                </div>
               ))}
             </StaggeredList>
           </AnimatedSection>
