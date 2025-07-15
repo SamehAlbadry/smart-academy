@@ -1329,21 +1329,35 @@ export default function Courses() {
                         </div>
 
                         {/* Action Button */}
-                        <div className="mt-auto">
-                          <a
-                            href={`/course-details?id=${course.id}`}
-                            onClick={(e) => {
-                              e.preventDefault();
+                        <div className="mt-auto space-y-2">
+                          {/* Primary Navigation Button */}
+                          <div
+                            onClick={() => {
+                              console.log(
+                                "Button clicked! Course ID:",
+                                course.id,
+                              );
                               window.location.href = `/course-details?id=${course.id}`;
                             }}
-                            className="w-full bg-primary hover:bg-primary/90 shadow-lg group-hover:shadow-xl transition-all duration-300 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 text-primary-foreground h-10 px-4 py-2 cursor-pointer"
+                            className="w-full bg-primary hover:bg-primary/90 shadow-lg group-hover:shadow-xl transition-all duration-300 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 text-primary-foreground h-10 px-4 py-2 cursor-pointer select-none"
                             style={{
                               textDecoration: "none",
                               pointerEvents: "auto",
+                              userSelect: "none",
+                              zIndex: 10,
                             }}
                           >
                             <span>View Details</span>
                             <Play className="ml-2 h-4 w-4" />
+                          </div>
+
+                          {/* Backup Simple Link */}
+                          <a
+                            href={`/course-details?id=${course.id}`}
+                            className="block w-full text-center bg-blue-600 text-white py-1 px-2 rounded text-xs hover:bg-blue-700"
+                            style={{ pointerEvents: "auto", zIndex: 10 }}
+                          >
+                            Backup Link
                           </a>
                         </div>
                       </CardContent>
