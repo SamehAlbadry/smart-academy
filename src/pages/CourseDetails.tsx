@@ -62,17 +62,15 @@ export default function CourseDetails() {
   const courseId = searchParams.get("id");
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const [activeTab, setActiveTab] = useState("overview");
+    const [activeTab, setActiveTab] = useState("overview");
 
   // Sample courses data - in a real app, this would come from an API
   const coursesData = {
     "1": {
       id: 1,
       title: "French Course",
-      subtitle:
-        "Comprehensive French language course from beginner to intermediate level with native speakers",
-      description:
-        "This comprehensive French course takes you from complete beginner to intermediate level. You'll learn practical conversation skills, proper grammar, and cultural insights that will help you communicate effectively in French-speaking countries. Our native French speakers will guide you through interactive lessons and real-world scenarios.",
+      subtitle: "Comprehensive French language course from beginner to intermediate level with native speakers",
+      description: "This comprehensive French course takes you from complete beginner to intermediate level. You'll learn practical conversation skills, proper grammar, and cultural insights that will help you communicate effectively in French-speaking countries. Our native French speakers will guide you through interactive lessons and real-world scenarios.",
       image: "bg-gradient-to-br from-blue-500 to-indigo-600",
       price: { usd: "$299", egp: "4,800EGP" },
       originalPrice: { usd: "$399", egp: "6,400EGP" },
@@ -93,8 +91,7 @@ export default function CourseDetails() {
         name: "Marie Dubois",
         title: "French Language Specialist",
         company: "Sorbonne University",
-        avatar:
-          "https://images.unsplash.com/photo-1494790108755-2616b612b788?w=150&h=150&fit=crop&crop=face",
+        avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b788?w=150&h=150&fit=crop&crop=face",
         bio: "Marie is a native French speaker with over 8 years of experience teaching French to international students. She holds a Master's degree in French Literature and has helped thousands of students achieve fluency.",
         students: 8420,
         courses: 5,
@@ -120,10 +117,8 @@ export default function CourseDetails() {
     "9": {
       id: 9,
       title: "Web Design – Front-End",
-      subtitle:
-        "Master modern front-end web development with HTML5, CSS3, JavaScript, and React",
-      description:
-        "This comprehensive course takes you from intermediate to advanced web development skills. You'll learn to build scalable, production-ready applications using modern technologies and best practices used by top tech companies.",
+      subtitle: "Master modern front-end web development with HTML5, CSS3, JavaScript, and React",
+      description: "This comprehensive course takes you from intermediate to advanced web development skills. You'll learn to build scalable, production-ready applications using modern technologies and best practices used by top tech companies.",
       image: "bg-gradient-to-br from-blue-500 to-purple-600",
       price: { usd: "$399", egp: "6,400EGP" },
       originalPrice: { usd: "$499", egp: "8,000EGP" },
@@ -144,8 +139,7 @@ export default function CourseDetails() {
         name: "Alex Rodriguez",
         title: "Senior Front-End Developer",
         company: "Google",
-        avatar:
-          "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop&crop=face",
+        avatar: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop&crop=face",
         bio: "Alex is a senior software engineer with 8+ years of experience building scalable web applications. He has worked at top tech companies and taught thousands of students worldwide.",
         students: 15420,
         courses: 8,
@@ -172,7 +166,7 @@ export default function CourseDetails() {
     },
   };
 
-  // Add modules data for courses
+    // Add modules data for courses
   const getModulesForCourse = (courseId) => {
     if (courseId === "1") {
       return [
@@ -271,8 +265,7 @@ export default function CourseDetails() {
     id: 1,
     title: "Course Not Found",
     subtitle: "The requested course could not be found",
-    description:
-      "Please return to the courses page to browse available courses.",
+    description: "Please return to the courses page to browse available courses.",
     image: "bg-gradient-to-br from-gray-500 to-gray-600",
     price: { usd: "$0", egp: "0 EGP" },
     originalPrice: { usd: "$0", egp: "0 EGP" },
@@ -299,9 +292,15 @@ export default function CourseDetails() {
       courses: 0,
       rating: 0,
     },
-    skills: ["Course not available"],
-    requirements: ["Course not available"],
-    features: [
+        skills: ["Course not available"],
+        requirements: ["Course not available"],
+  };
+
+  // Add modules to the course object
+  course.modules = getModulesForCourse(courseId);
+
+  // Course features and reviews data
+  const courseFeatures = [
       { icon: Monitor, text: "12 hours of HD video content" },
       { icon: Download, text: "Downloadable resources" },
       { icon: Smartphone, text: "Mobile and TV access" },
