@@ -65,6 +65,9 @@ export default function CourseDetails() {
   const [activeTab, setActiveTab] = useState("overview");
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [completedLessons, setCompletedLessons] = useState([]);
+  const [showPreview, setShowPreview] = useState(false);
 
   // Course data - this would typically come from an API
   const coursesData = [
@@ -440,6 +443,25 @@ export default function CourseDetails() {
       toast({
         title: "Link copied!",
         description: "Course link copied to clipboard",
+      });
+    }
+  };
+
+  const handlePreview = () => {
+    setShowPreview(true);
+    toast({
+      title: "Starting Preview",
+      description: "Enjoy a preview of this amazing course!",
+    });
+  };
+
+  const handleStartLearning = () => {
+    if (!isEnrolled) {
+      handleEnroll();
+    } else {
+      toast({
+        title: "Continuing Course",
+        description: "Redirecting to your course dashboard...",
       });
     }
   };
