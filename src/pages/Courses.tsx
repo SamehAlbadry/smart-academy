@@ -1316,7 +1316,10 @@ export default function Courses() {
                         </div>
 
                         {/* Action Button */}
-                        <Link to="/course-details" className="mt-auto">
+                        <Link
+                          to={`/course-details?id=${course.id}`}
+                          className="mt-auto"
+                        >
                           <Button className="w-full bg-primary hover:bg-primary/90 shadow-lg group-hover:shadow-xl transition-all duration-300">
                             <span>{t("courses.viewDetails")}</span>
                             <Play className="ml-2 h-4 w-4" />
