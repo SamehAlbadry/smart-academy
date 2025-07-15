@@ -321,7 +321,7 @@ export default function CourseDetails() {
 
   // Add modules data for courses
   const getModulesForCourse = (courseId) => {
-    if (courseId === "1") {
+    if (courseId === "1" || courseId === "2") {
       return [
         {
           title: "French Basics and Pronunciation",
