@@ -71,13 +71,13 @@ export function StaggeredList({
         <div
           key={index}
           className={cn(
-            "transition-all duration-700 ease-out",
+            "transition-all duration-500 ease-out",
             visibleItems[index]
               ? "opacity-100 translate-y-0 scale-100"
-              : "opacity-0 translate-y-8 scale-95",
+              : "opacity-0 translate-y-2 scale-98",
             itemClassName,
           )}
-          style={{ transitionDelay: `${index * 50}ms` }}
+          style={{ transitionDelay: `${index * 30}ms` }}
         >
           {child}
         </div>
