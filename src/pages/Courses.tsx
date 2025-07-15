@@ -1156,7 +1156,7 @@ export default function Courses() {
                 </Select>
               </div>
 
-              <div className="flex items-center justify-between">
+                            <div className="flex items-center justify-between">
                 <p className="text-sm text-muted-foreground">
                   Showing {sortedCourses.length} of {courses.length} courses
                 </p>
@@ -1180,16 +1180,31 @@ export default function Courses() {
             </div>
           </AnimatedSection>
 
-          {/* Courses Grid */}
-          <AnimatedSection animation="fade-up" delay={400} className="mt-16">
-            <div
-              className={`grid gap-6 ${
-                viewMode === "grid"
-                  ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3"
-                  : "grid-cols-1 max-w-4xl mx-auto"
-              }`}
-            >
-              {sortedCourses.map((course) => (
+                    {/* Courses Grid */}
+          <AnimatedSection animation="fade-up" delay={200} className="mt-16">
+            {sortedCourses.length === 0 ? (
+              <div className="text-center py-16">
+                <div className="text-6xl mb-4">📚</div>
+                <h3 className="text-2xl font-bold mb-2">No courses found</h3>
+                <p className="text-muted-foreground mb-4">
+                  Try adjusting your search criteria or browse all courses.
+                </p>
+                <Button onClick={() => {
+                  setSearchQuery("");
+                  setFilterBy("all");
+                }}>
+                  Show All Courses
+                </Button>
+              </div>
+            ) : (
+              <div
+                className={`grid gap-6 ${
+                  viewMode === "grid"
+                    ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3"
+                    : "grid-cols-1 max-w-4xl mx-auto"
+                }`}
+              >
+                {sortedCourses.map((course) => (
                 <div key={course.id} className="group cursor-pointer">
                   <Card
                     className={`${viewMode === "list" ? "flex flex-row h-auto" : "h-full"} bg-white dark:bg-gray-900 border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden rounded-xl group-hover:-translate-y-1`}
