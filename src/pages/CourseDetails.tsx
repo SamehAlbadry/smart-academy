@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSearchParams, useParams } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { useI18n } from "@/lib/i18n";
 import { useStore } from "@/store/useStore";
@@ -57,183 +58,724 @@ export default function CourseDetails() {
   const { t } = useI18n();
   const isEgyptUser = useStore((state) => state.isEgyptUser);
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
+  const { id: paramId } = useParams();
+  const courseId = paramId || searchParams.get("id");
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
 
-  const course = {
-    id: 1,
-    title: "Advanced Web Development",
-    subtitle:
-      "Master modern web development with React, Node.js, and industry best practices",
-    description:
-      "This comprehensive course takes you from intermediate to advanced web development skills. You'll learn to build scalable, production-ready applications using modern technologies and best practices used by top tech companies.",
-    image: "bg-gradient-to-br from-blue-500 to-purple-600",
-    price: { usd: "$299", egp: "5,000EGP" },
-    originalPrice: { usd: "$399", egp: "6,500EGP" },
-    discount: 25,
-    rating: 4.9,
-    reviewCount: 892,
-    students: 2431,
-    duration: "12 weeks",
-    level: "Advanced",
-    category: "Development",
-    language: "English",
-    subtitles: ["English", "Arabic"],
-    lastUpdated: "November 2024",
-    certificate: true,
-    featured: true,
-    startDate: "January 15, 2025",
-    instructor: {
-      name: "Dr. Sarah Ahmed",
-      title: "Senior Software Engineer",
-      company: "Google",
-      avatar:
-        "https://images.unsplash.com/photo-1494790108755-2616b332c1fe?w=100&h=100&fit=crop&crop=face",
-      bio: "Dr. Sarah is a senior software engineer with 10+ years of experience building scalable web applications. She has worked at top tech companies and taught thousands of students worldwide.",
-      students: 15420,
-      courses: 8,
+  // Sample courses data - in a real app, this would come from an API
+  const coursesData = {
+    "1": {
+      id: 1,
+      title: "French Course",
+      subtitle:
+        "Comprehensive French language course from beginner to intermediate level with native speakers",
+      description:
+        "This comprehensive French course takes you from complete beginner to intermediate level. You'll learn practical conversation skills, proper grammar, and cultural insights that will help you communicate effectively in French-speaking countries. Our native French speakers will guide you through interactive lessons and real-world scenarios.",
+      image: "bg-gradient-to-br from-blue-500 to-indigo-600",
+      price: { usd: "$299", egp: "4,800EGP" },
+      originalPrice: { usd: "$399", egp: "6,400EGP" },
+      discount: 25,
       rating: 4.9,
+      reviewCount: 1820,
+      students: 1820,
+      duration: "16 weeks",
+      level: "Beginner",
+      category: "Global Languages",
+      language: "English",
+      subtitles: ["English", "Arabic"],
+      lastUpdated: "November 2024",
+      certificate: true,
+      featured: true,
+      startDate: "January 15, 2025",
+      instructor: {
+        name: "Marie Dubois",
+        title: "French Language Specialist",
+        company: "Sorbonne University",
+        avatar:
+          "https://images.unsplash.com/photo-1494790108755-2616b612b788?w=150&h=150&fit=crop&crop=face",
+        bio: "Marie is a native French speaker with over 8 years of experience teaching French to international students. She holds a Master's degree in French Literature and has helped thousands of students achieve fluency.",
+        students: 8420,
+        courses: 5,
+        rating: 4.9,
+      },
+      skills: [
+        "Basic French conversation and greetings",
+        "Essential French grammar and sentence structure",
+        "French pronunciation and accent training",
+        "Everyday vocabulary for travel and work",
+        "French culture and social customs",
+        "Reading comprehension skills",
+        "Writing skills for emails and letters",
+        "Listening comprehension with native speakers",
+      ],
+      requirements: [
+        "No previous French experience required",
+        "Willingness to practice speaking regularly",
+        "Computer with internet connection",
+        "Microphone for speaking exercises",
+      ],
     },
-    skills: [
-      "Modern React development with hooks and context",
-      "Building RESTful APIs with Node.js and Express",
-      "Database design and implementation with MongoDB",
-      "Authentication and authorization best practices",
-      "Deployment strategies and DevOps fundamentals",
-      "Testing strategies for full-stack applications",
-      "Performance optimization techniques",
-      "Security best practices",
-      "Advanced JavaScript concepts",
-      "Code organization and architecture patterns",
-    ],
-    modules: [
-      {
-        title: "Introduction to Modern Web Development",
-        lessons: 5,
-        duration: "2 hours",
-        icon: Code,
-        topics: [
-          "Course overview",
-          "Development environment setup",
-          "Modern JavaScript features",
-          "Git and version control",
-          "Project structure",
-        ],
-      },
-      {
-        title: "React Fundamentals and Advanced Patterns",
-        lessons: 8,
-        duration: "4 hours",
-        icon: Layers,
-        topics: [
-          "Components and JSX",
-          "State and props",
-          "Hooks",
-          "Context API",
-          "Performance optimization",
-          "Advanced patterns",
-        ],
-      },
-      {
-        title: "Backend Development with Node.js",
-        lessons: 6,
-        duration: "3 hours",
-        icon: Server,
-        topics: [
-          "Express.js setup",
-          "Middleware",
-          "Routing",
-          "Error handling",
-          "File uploads",
-          "Security",
-        ],
-      },
-      {
-        title: "Database Design and Integration",
-        lessons: 4,
-        duration: "2.5 hours",
-        icon: Database,
-        topics: [
-          "MongoDB setup",
-          "Mongoose ODM",
-          "Schema design",
-          "Relationships",
-          "Aggregation",
-        ],
-      },
-      {
-        title: "Authentication and Security",
-        lessons: 3,
-        duration: "2 hours",
-        icon: Shield,
-        topics: [
-          "JWT tokens",
-          "Password hashing",
-          "OAuth",
-          "Security best practices",
-        ],
-      },
-      {
-        title: "Deployment and Production",
-        lessons: 2,
-        duration: "1.5 hours",
-        icon: Globe,
-        topics: [
-          "Cloud deployment",
-          "Environment variables",
-          "Monitoring",
-          "Performance",
-        ],
-      },
-    ],
-    requirements: [
-      "Basic knowledge of HTML, CSS, and JavaScript",
-      "Understanding of programming fundamentals",
-      "Familiarity with command line/terminal",
-      "Computer with internet connection",
-    ],
-    features: [
-      { icon: Monitor, text: "12 hours of HD video content" },
-      { icon: Download, text: "Downloadable resources" },
-      { icon: Smartphone, text: "Mobile and TV access" },
-      { icon: Trophy, text: "Certificate of completion" },
-      { icon: Globe, text: "Lifetime access" },
-      { icon: Headphones, text: "24/7 student support" },
-    ],
-    reviews: [
-      {
-        id: 1,
-        name: "Ahmed Hassan",
+    "9": {
+      id: 9,
+      title: "Web Design – Front-End",
+      subtitle:
+        "Master modern front-end web development with HTML5, CSS3, JavaScript, and React",
+      description:
+        "This comprehensive course takes you from intermediate to advanced web development skills. You'll learn to build scalable, production-ready applications using modern technologies and best practices used by top tech companies.",
+      image: "bg-gradient-to-br from-blue-500 to-purple-600",
+      price: { usd: "$399", egp: "6,400EGP" },
+      originalPrice: { usd: "$499", egp: "8,000EGP" },
+      discount: 20,
+      rating: 4.9,
+      reviewCount: 2431,
+      students: 2431,
+      duration: "16 weeks",
+      level: "Intermediate",
+      category: "Programming & Technology",
+      language: "English",
+      subtitles: ["English", "Arabic"],
+      lastUpdated: "November 2024",
+      certificate: true,
+      featured: true,
+      startDate: "January 15, 2025",
+      instructor: {
+        name: "Alex Rodriguez",
+        title: "Senior Front-End Developer",
+        company: "Google",
         avatar:
-          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face",
-        rating: 5,
-        comment:
-          "Excellent course! The instructor explains everything clearly and the projects are very practical.",
-        date: "2 weeks ago",
+          "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=150&h=150&fit=crop&crop=face",
+        bio: "Alex is a senior software engineer with 8+ years of experience building scalable web applications. He has worked at top tech companies and taught thousands of students worldwide.",
+        students: 15420,
+        courses: 8,
+        rating: 4.9,
       },
-      {
-        id: 2,
-        name: "Fatima Al-Zahra",
+      skills: [
+        "Modern React development with hooks and context",
+        "Building responsive layouts with CSS Grid and Flexbox",
+        "JavaScript ES6+ features and best practices",
+        "HTML5 semantic elements and accessibility",
+        "CSS animations and transitions",
+        "Version control with Git and GitHub",
+        "Web performance optimization",
+        "Testing frontend applications",
+        "Deployment strategies",
+        "Code organization and architecture patterns",
+      ],
+      requirements: [
+        "Basic knowledge of HTML, CSS, and JavaScript",
+        "Understanding of programming fundamentals",
+        "Familiarity with command line/terminal",
+        "Computer with internet connection",
+      ],
+    },
+    "2": {
+      id: 2,
+      title: "French Advanced",
+      subtitle:
+        "Advanced French language course focusing on business communication and cultural nuances",
+      description:
+        "Take your French skills to the next level with advanced grammar, business communication, and deep cultural insights. Perfect for professionals and students who want to achieve fluency in French.",
+      image: "bg-gradient-to-br from-purple-500 to-blue-600",
+      price: { usd: "$399", egp: "6,400EGP" },
+      originalPrice: { usd: "$499", egp: "8,000EGP" },
+      discount: 20,
+      rating: 4.8,
+      reviewCount: 1240,
+      students: 1240,
+      duration: "20 weeks",
+      level: "Advanced",
+      category: "Global Languages",
+      language: "English",
+      subtitles: ["English", "Arabic"],
+      lastUpdated: "November 2024",
+      certificate: true,
+      featured: false,
+      startDate: "January 15, 2025",
+      instructor: {
+        name: "Pierre Laurent",
+        title: "Senior French Instructor",
+        company: "Sorbonne University",
         avatar:
-          "https://images.unsplash.com/photo-1494790108755-2616b332c1fe?w=50&h=50&fit=crop&crop=face",
-        rating: 5,
-        comment:
-          "This course transformed my career. I got a job as a full-stack developer after completing it!",
-        date: "1 month ago",
+          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+        bio: "Pierre is a senior French instructor with 12 years of experience teaching advanced French to international professionals and students.",
+        students: 6200,
+        courses: 3,
+        rating: 4.8,
       },
-      {
-        id: 3,
-        name: "Mohammed Ali",
+      skills: [
+        "Advanced French grammar and syntax",
+        "Business French communication",
+        "French literature and culture",
+        "Professional presentation skills in French",
+        "Advanced conversation techniques",
+        "French writing for business and academia",
+      ],
+      requirements: [
+        "Intermediate French level required",
+        "Basic understanding of French grammar",
+        "Willingness to engage in complex conversations",
+        "Computer with internet connection",
+      ],
+    },
+    "8": {
+      id: 8,
+      title: "Quran Kareem",
+      subtitle:
+        "Learn proper Quran recitation with Tajweed rules and Arabic language fundamentals",
+      description:
+        "Master the beautiful art of Quran recitation with proper Tajweed rules. This comprehensive course covers Arabic pronunciation, Quranic vocabulary, and the spiritual aspects of recitation.",
+      image: "bg-gradient-to-br from-green-600 to-emerald-700",
+      price: { usd: "$149", egp: "2,400EGP" },
+      originalPrice: { usd: "$229", egp: "3,700EGP" },
+      discount: 35,
+      rating: 4.9,
+      reviewCount: 2800,
+      students: 2800,
+      duration: "24 weeks",
+      level: "All Levels",
+      category: "Global Languages",
+      language: "Arabic",
+      subtitles: ["Arabic", "English"],
+      lastUpdated: "November 2024",
+      certificate: true,
+      featured: true,
+      startDate: "January 15, 2025",
+      instructor: {
+        name: "Sheikh Ahmad Hassan",
+        title: "Quran & Tajweed Specialist",
+        company: "Islamic University",
         avatar:
-          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face",
-        rating: 4,
-        comment:
-          "Great content and well-structured. Would recommend to anyone serious about web development.",
-        date: "3 weeks ago",
+          "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&h=150&fit=crop&crop=face",
+        bio: "Sheikh Ahmad has 20 years of experience teaching Quran recitation and Tajweed to students worldwide.",
+        students: 12000,
+        courses: 4,
+        rating: 4.9,
       },
-    ],
+      skills: [
+        "Proper Quran recitation with Tajweed",
+        "Arabic alphabet and pronunciation",
+        "Quranic vocabulary and meanings",
+        "Spiritual aspects of recitation",
+        "Memorization techniques",
+        "Understanding of basic Arabic grammar",
+      ],
+      requirements: [
+        "No previous Arabic knowledge required",
+        "Sincere intention to learn",
+        "Quiet space for practice",
+        "Computer with internet connection",
+      ],
+    },
+    "18": {
+      id: 18,
+      title: "Arabic Calligraphy Course",
+      subtitle:
+        "Master the art of Arabic calligraphy from traditional scripts to modern artistic expressions",
+      description:
+        "Discover the beauty of Arabic calligraphy in this comprehensive course. Learn traditional scripts, modern techniques, and develop your own artistic style.",
+      image: "bg-gradient-to-br from-amber-500 to-orange-600",
+      price: { usd: "$299", egp: "4,800EGP" },
+      originalPrice: { usd: "$399", egp: "6,400EGP" },
+      discount: 25,
+      rating: 4.9,
+      reviewCount: 1456,
+      students: 1456,
+      duration: "18 weeks",
+      level: "All Levels",
+      category: "Design & Creative Arts",
+      language: "Arabic",
+      subtitles: ["Arabic", "English"],
+      lastUpdated: "November 2024",
+      certificate: true,
+      featured: true,
+      startDate: "January 15, 2025",
+      instructor: {
+        name: "Ustaz Mahmoud Al-Khattat",
+        title: "Master Calligrapher",
+        company: "Cairo Institute of Arts",
+        avatar:
+          "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&h=150&fit=crop&crop=face",
+        bio: "Ustaz Mahmoud is a master calligrapher with 25 years of experience in traditional and modern Arabic calligraphy.",
+        students: 5600,
+        courses: 6,
+        rating: 4.9,
+      },
+      skills: [
+        "Traditional Arabic calligraphy scripts",
+        "Modern calligraphy techniques",
+        "Pen and ink mastery",
+        "Composition and layout design",
+        "Digital calligraphy tools",
+        "Creating artistic pieces",
+      ],
+      requirements: [
+        "Basic Arabic reading ability helpful but not required",
+        "Interest in art and design",
+        "Calligraphy pens and paper (provided guidance)",
+        "Computer with internet connection",
+      ],
+    },
+    "10": {
+      id: 10,
+      title: "FullStack – Python",
+      subtitle:
+        "Complete full-stack development with Python, Django, and modern web technologies",
+      description:
+        "Master full-stack web development from scratch! Learn Python, Django, React, and deploy production-ready applications. This course covers everything from backend APIs to frontend interfaces and database management.",
+      image: "bg-gradient-to-br from-yellow-500 to-orange-600",
+      price: { usd: "$499", egp: "8,000EGP" },
+      originalPrice: { usd: "$599", egp: "9,600EGP" },
+      discount: 17,
+      rating: 4.8,
+      reviewCount: 1876,
+      students: 1876,
+      duration: "24 weeks",
+      level: "Advanced",
+      category: "Programming & Technology",
+      language: "English",
+      subtitles: ["English", "Arabic"],
+      lastUpdated: "November 2024",
+      certificate: true,
+      featured: true,
+      startDate: "January 15, 2025",
+      instructor: {
+        name: "Dr. Emily Chen",
+        title: "Python Full-Stack Expert",
+        company: "Microsoft",
+        avatar:
+          "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face",
+        bio: "Dr. Emily is a senior software engineer with 12+ years of experience building scalable web applications at top tech companies.",
+        students: 15420,
+        courses: 8,
+        rating: 4.8,
+      },
+      skills: [
+        "Python programming from basics to advanced",
+        "Django framework and REST API development",
+        "React frontend development",
+        "Database design with PostgreSQL",
+        "Authentication and security implementation",
+        "Cloud deployment on AWS/Heroku",
+        "Testing and debugging techniques",
+        "Version control with Git",
+      ],
+      requirements: [
+        "Basic programming knowledge helpful but not required",
+        "Computer with internet connection",
+        "Willingness to code 2-3 hours daily",
+        "English language proficiency",
+      ],
+    },
+    "23": {
+      id: 23,
+      title: "Kids Craft Art Course",
+      subtitle:
+        "Fun and creative art course designed specifically for children aged 6-14",
+      description:
+        "Unlock your child's creativity with this engaging art course! Kids will learn painting, drawing, crafting, and digital art while having tons of fun. Perfect for developing artistic skills and boosting confidence.",
+      image: "bg-gradient-to-br from-yellow-400 to-pink-500",
+      price: { usd: "$149", egp: "2,400EGP" },
+      originalPrice: { usd: "$199", egp: "3,200EGP" },
+      discount: 25,
+      rating: 4.9,
+      reviewCount: 3456,
+      students: 3456,
+      duration: "12 weeks",
+      level: "Beginner",
+      category: "Design & Creative Arts",
+      language: "English",
+      subtitles: ["English", "Arabic"],
+      lastUpdated: "November 2024",
+      certificate: true,
+      featured: true,
+      startDate: "January 15, 2025",
+      instructor: {
+        name: "Emma Collins",
+        title: "Children's Art Instructor",
+        company: "Creative Kids Academy",
+        avatar:
+          "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=150&h=150&fit=crop&crop=face",
+        bio: "Emma is a passionate children's art teacher with 6 years of experience helping kids discover their artistic talents.",
+        students: 8500,
+        courses: 5,
+        rating: 4.9,
+      },
+      skills: [
+        "Basic drawing and sketching techniques",
+        "Watercolor and acrylic painting",
+        "Paper crafts and collage making",
+        "Digital art on tablets",
+        "Color theory for kids",
+        "Creative storytelling through art",
+        "Art history made fun",
+        "Building artistic confidence",
+      ],
+      requirements: [
+        "Age 6-14 years old",
+        "Basic art supplies (list provided)",
+        "Tablet or computer for digital lessons",
+        "Parent supervision for younger children",
+      ],
+    },
   };
+
+  // Add modules data for courses
+  const getModulesForCourse = (courseId) => {
+    if (courseId === "1" || courseId === "2") {
+      return [
+        {
+          title: "French Basics and Pronunciation",
+          lessons: 6,
+          duration: "2.5 hours",
+          icon: Code,
+          topics: [
+            "French alphabet and sounds",
+            "Basic greetings and introductions",
+            "Numbers and counting",
+            "Days of the week and months",
+            "Essential pronunciation rules",
+            "Common expressions",
+          ],
+        },
+        {
+          title: "Grammar Fundamentals",
+          lessons: 8,
+          duration: "4 hours",
+          icon: Layers,
+          topics: [
+            "Noun genders and articles",
+            "Present tense verbs",
+            "Question formation",
+            "Adjective agreement",
+            "Prepositions",
+            "Negative sentences",
+          ],
+        },
+        {
+          title: "Practical Conversations",
+          lessons: 6,
+          duration: "3 hours",
+          icon: MessageCircle,
+          topics: [
+            "At the restaurant",
+            "Shopping and prices",
+            "Asking for directions",
+            "Talking about family",
+            "Hobbies and interests",
+            "Travel situations",
+          ],
+        },
+      ];
+    } else if (courseId === "8") {
+      return [
+        {
+          title: "Quran Basics and Arabic Letters",
+          lessons: 8,
+          duration: "3 hours",
+          icon: Code,
+          topics: [
+            "Arabic alphabet recognition",
+            "Letter shapes and forms",
+            "Basic pronunciation rules",
+            "Connecting letters",
+            "Short vowels (Harakat)",
+            "Reading simple words",
+          ],
+        },
+        {
+          title: "Tajweed Rules Foundation",
+          lessons: 10,
+          duration: "4.5 hours",
+          icon: Layers,
+          topics: [
+            "Introduction to Tajweed",
+            "Makharij (points of articulation)",
+            "Sifaat (characteristics of letters)",
+            "Noon Sakinah and Tanween rules",
+            "Meem Sakinah rules",
+            "Qalqalah",
+          ],
+        },
+        {
+          title: "Advanced Recitation",
+          lessons: 12,
+          duration: "5 hours",
+          icon: MessageCircle,
+          topics: [
+            "Madd (elongation) rules",
+            "Waqf (stopping) rules",
+            "Ibtida (starting) rules",
+            "Beautiful recitation practice",
+            "Memorization techniques",
+            "Spiritual aspects of recitation",
+          ],
+        },
+      ];
+    } else if (courseId === "18") {
+      return [
+        {
+          title: "Calligraphy Foundations",
+          lessons: 6,
+          duration: "3 hours",
+          icon: Code,
+          topics: [
+            "History of Arabic calligraphy",
+            "Tools and materials",
+            "Basic pen techniques",
+            "Letter proportions",
+            "Naskh script basics",
+            "Practice exercises",
+          ],
+        },
+        {
+          title: "Traditional Scripts",
+          lessons: 8,
+          duration: "4 hours",
+          icon: Layers,
+          topics: [
+            "Thuluth script",
+            "Diwani script",
+            "Kufic script",
+            "Ruq'ah script",
+            "Script characteristics",
+            "Advanced letter forms",
+          ],
+        },
+        {
+          title: "Artistic Composition",
+          lessons: 6,
+          duration: "3 hours",
+          icon: Monitor,
+          topics: [
+            "Layout and composition",
+            "Decorative elements",
+            "Color theory in calligraphy",
+            "Modern adaptations",
+            "Digital calligraphy",
+            "Creating masterpieces",
+          ],
+        },
+      ];
+    } else if (courseId === "10") {
+      return [
+        {
+          title: "Python Fundamentals",
+          lessons: 8,
+          duration: "4 hours",
+          icon: Code,
+          topics: [
+            "Python syntax and basics",
+            "Variables and data types",
+            "Control structures",
+            "Functions and modules",
+            "Object-oriented programming",
+            "Error handling",
+          ],
+        },
+        {
+          title: "Django Backend Development",
+          lessons: 10,
+          duration: "5 hours",
+          icon: Server,
+          topics: [
+            "Django project setup",
+            "Models and databases",
+            "Views and URLs",
+            "Django REST Framework",
+            "Authentication system",
+            "API development",
+          ],
+        },
+        {
+          title: "React Frontend Integration",
+          lessons: 8,
+          duration: "4 hours",
+          icon: Layers,
+          topics: [
+            "React components",
+            "State management",
+            "API integration",
+            "Routing",
+            "UI/UX best practices",
+            "Testing frontend",
+          ],
+        },
+      ];
+    } else if (courseId === "23") {
+      return [
+        {
+          title: "Art Basics for Kids",
+          lessons: 6,
+          duration: "2 hours",
+          icon: Code,
+          topics: [
+            "Drawing shapes and lines",
+            "Understanding colors",
+            "Basic painting techniques",
+            "Using different art tools",
+            "Creative warm-up exercises",
+            "Art safety rules",
+          ],
+        },
+        {
+          title: "Fun Craft Projects",
+          lessons: 8,
+          duration: "3 hours",
+          icon: Layers,
+          topics: [
+            "Paper crafts and origami",
+            "Collage and mixed media",
+            "Nature crafts",
+            "Holiday decorations",
+            "3D art projects",
+            "Recycled art creations",
+          ],
+        },
+        {
+          title: "Digital Art for Kids",
+          lessons: 4,
+          duration: "1.5 hours",
+          icon: Monitor,
+          topics: [
+            "Introduction to digital drawing",
+            "Using art apps on tablets",
+            "Creating digital stories",
+            "Sharing artwork safely online",
+          ],
+        },
+      ];
+    } else {
+      return [
+        {
+          title: "Introduction to Modern Web Development",
+          lessons: 5,
+          duration: "2 hours",
+          icon: Code,
+          topics: [
+            "Course overview",
+            "Development environment setup",
+            "Modern JavaScript features",
+            "Git and version control",
+            "Project structure",
+          ],
+        },
+        {
+          title: "React Fundamentals and Advanced Patterns",
+          lessons: 8,
+          duration: "4 hours",
+          icon: Layers,
+          topics: [
+            "Components and JSX",
+            "State and props",
+            "Hooks",
+            "Context API",
+            "Performance optimization",
+            "Advanced patterns",
+          ],
+        },
+        {
+          title: "Responsive Design and CSS",
+          lessons: 6,
+          duration: "3 hours",
+          icon: Monitor,
+          topics: [
+            "CSS Grid and Flexbox",
+            "Mobile-first design",
+            "CSS animations",
+            "Sass/SCSS",
+            "Design systems",
+            "Browser compatibility",
+          ],
+        },
+      ];
+    }
+  };
+
+  // Get the course data based on ID, fallback to default course
+  const course = coursesData[courseId] || {
+    id: 1,
+    title: "Course Not Found",
+    subtitle: "The requested course could not be found",
+    description:
+      "Please return to the courses page to browse available courses.",
+    image: "bg-gradient-to-br from-gray-500 to-gray-600",
+    price: { usd: "$0", egp: "0 EGP" },
+    originalPrice: { usd: "$0", egp: "0 EGP" },
+    discount: 0,
+    rating: 0,
+    reviewCount: 0,
+    students: 0,
+    duration: "0 weeks",
+    level: "Unknown",
+    category: "Unknown",
+    language: "English",
+    subtitles: ["English"],
+    lastUpdated: "Never",
+    certificate: false,
+    featured: false,
+    startDate: "TBD",
+    instructor: {
+      name: "Unknown",
+      title: "Unknown",
+      company: "Unknown",
+      avatar: "",
+      bio: "Course not found.",
+      students: 0,
+      courses: 0,
+      rating: 0,
+    },
+    skills: ["Course not available"],
+    requirements: ["Course not available"],
+  };
+
+  // Add modules to the course object
+  course.modules = getModulesForCourse(courseId);
+
+  // Course features and reviews data
+  const courseFeatures = [
+    { icon: Monitor, text: "12 hours of HD video content" },
+    { icon: Download, text: "Downloadable resources" },
+    { icon: Smartphone, text: "Mobile and TV access" },
+    { icon: Trophy, text: "Certificate of completion" },
+    { icon: Globe, text: "Lifetime access" },
+    { icon: Headphones, text: "24/7 student support" },
+  ];
+
+  const courseReviews = [
+    {
+      id: 1,
+      name: "Ahmed Hassan",
+      avatar:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face",
+      rating: 5,
+      comment:
+        "Excellent course! The instructor explains everything clearly and the projects are very practical.",
+      date: "2 weeks ago",
+    },
+    {
+      id: 2,
+      name: "Fatima Al-Zahra",
+      avatar:
+        "https://images.unsplash.com/photo-1494790108755-2616b332c1fe?w=50&h=50&fit=crop&crop=face",
+      rating: 5,
+      comment:
+        "This course transformed my career. I got a job as a full-stack developer after completing it!",
+      date: "1 month ago",
+    },
+    {
+      id: 3,
+      name: "Mohammed Ali",
+      avatar:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face",
+      rating: 4,
+      comment:
+        "Great content and well-structured. Would recommend to anyone serious about web development.",
+      date: "3 weeks ago",
+    },
+  ];
 
   const handleEnroll = () => {
     setIsEnrolled(true);
@@ -286,15 +828,17 @@ export default function CourseDetails() {
               <div className="lg:col-span-2">
                 <AnimatedSection animation="fade-up">
                   <div className="flex items-center gap-4 mb-6">
-                    <Badge className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-4 py-2">
-                      <Sparkles className="mr-2 h-4 w-4" />
-                      {t("courseDetails.badge.featured")}
+                    {course.featured && (
+                      <Badge className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-4 py-2">
+                        <Sparkles className="mr-2 h-4 w-4" />
+                        Featured
+                      </Badge>
+                    )}
+                    <Badge variant="outline" className="px-4 py-2">
+                      {course.level}
                     </Badge>
                     <Badge variant="outline" className="px-4 py-2">
-                      {t("courses.level.advanced")}
-                    </Badge>
-                    <Badge variant="outline" className="px-4 py-2">
-                      {t("courses.category.development")}
+                      {course.category}
                     </Badge>
                   </div>
 
@@ -312,8 +856,7 @@ export default function CourseDetails() {
                       <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
                       <span className="font-semibold">{course.rating}</span>
                       <span className="text-muted-foreground">
-                        ({course.reviewCount.toLocaleString()}{" "}
-                        {t("courseDetails.reviews")})
+                        ({course.reviewCount.toLocaleString()} reviews)
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -321,9 +864,7 @@ export default function CourseDetails() {
                       <span className="font-semibold">
                         {course.students.toLocaleString()}
                       </span>
-                      <span className="text-muted-foreground">
-                        {t("courseDetails.students")}
-                      </span>
+                      <span className="text-muted-foreground">students</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Clock className="h-5 w-5 text-primary" />
@@ -348,23 +889,19 @@ export default function CourseDetails() {
                     </Avatar>
                     <div>
                       <p className="text-sm text-muted-foreground">
-                        {t("courseDetails.instructor")}
+                        Instructor
                       </p>
                       <h3 className="text-lg font-semibold">
                         {course.instructor.name}
                       </h3>
                       <p className="text-sm text-muted-foreground">
-                        {course.instructor.title} {t("common.at")}{" "}
-                        {course.instructor.company}
+                        {course.instructor.title} at {course.instructor.company}
                       </p>
                       <div className="flex items-center gap-4 mt-2 text-sm">
                         <span>
-                          {course.instructor.students.toLocaleString()}{" "}
-                          {t("courseDetails.students")}
+                          {course.instructor.students.toLocaleString()} students
                         </span>
-                        <span>
-                          {course.instructor.courses} {t("nav.courses")}
-                        </span>
+                        <span>{course.instructor.courses} courses</span>
                         <div className="flex items-center gap-1">
                           <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                           <span>{course.instructor.rating}</span>
@@ -413,14 +950,14 @@ export default function CourseDetails() {
                                 ? course.originalPrice.egp
                                 : course.originalPrice.usd}
                             </span>
-                            <Badge className="bg-red-500 text-white">
-                              {course.discount}%{" "}
-                              {t("courseDetails.price.discount")}
-                            </Badge>
+                            {course.discount > 0 && (
+                              <Badge className="bg-red-500 text-white">
+                                {course.discount}% OFF
+                              </Badge>
+                            )}
                           </div>
                           <p className="text-sm text-muted-foreground">
-                            {t("courseDetails.price.payment")} •{" "}
-                            {t("courseDetails.price.access")}
+                            One-time payment • Lifetime access
                           </p>
                         </div>
 
@@ -435,12 +972,12 @@ export default function CourseDetails() {
                               {isEnrolled ? (
                                 <>
                                   <CheckCircle className="mr-2 h-5 w-5" />
-                                  {t("courseDetails.enrolled")}
+                                  Enrolled
                                 </>
                               ) : (
                                 <>
                                   <Zap className="mr-2 h-5 w-5" />
-                                  {t("courseDetails.enroll")}
+                                  Enroll Now
                                 </>
                               )}
                             </Button>
@@ -455,9 +992,7 @@ export default function CourseDetails() {
                               <Bookmark
                                 className={`mr-2 h-4 w-4 ${isBookmarked ? "fill-current" : ""}`}
                               />
-                              {isBookmarked
-                                ? t("courseDetails.saved")
-                                : t("courseDetails.save")}
+                              {isBookmarked ? "Saved" : "Save"}
                             </Button>
                             <Button variant="outline" onClick={handleShare}>
                               <Share2 className="h-4 w-4" />
@@ -468,34 +1003,17 @@ export default function CourseDetails() {
                         {/* Course Features */}
                         <div className="space-y-3">
                           <h4 className="font-semibold">
-                            {t("courseDetails.includes")}
+                            This course includes:
                           </h4>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Monitor className="h-4 w-4 text-primary" />
-                            <span>12 {t("courseDetails.features.video")}</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Download className="h-4 w-4 text-primary" />
-                            <span>{t("courseDetails.features.resources")}</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Smartphone className="h-4 w-4 text-primary" />
-                            <span>{t("courseDetails.features.mobile")}</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Trophy className="h-4 w-4 text-primary" />
-                            <span>
-                              {t("courseDetails.features.certificate")}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Globe className="h-4 w-4 text-primary" />
-                            <span>{t("courseDetails.features.lifetime")}</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Headphones className="h-4 w-4 text-primary" />
-                            <span>{t("courseDetails.features.support")}</span>
-                          </div>
+                          {courseFeatures.map((feature, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center gap-3 text-sm"
+                            >
+                              <feature.icon className="h-4 w-4 text-primary" />
+                              <span>{feature.text}</span>
+                            </div>
+                          ))}
                         </div>
 
                         {/* Guarantee */}
@@ -503,7 +1021,7 @@ export default function CourseDetails() {
                           <div className="flex items-center gap-2 text-green-700 dark:text-green-400">
                             <Shield className="h-4 w-4" />
                             <span className="text-sm font-medium">
-                              {t("courseDetails.guarantee")}
+                              30-day money-back guarantee
                             </span>
                           </div>
                         </div>
@@ -527,18 +1045,10 @@ export default function CourseDetails() {
               className="w-full"
             >
               <TabsList className="grid w-full grid-cols-4 mb-12">
-                <TabsTrigger value="overview">
-                  {t("courseDetails.tabs.overview")}
-                </TabsTrigger>
-                <TabsTrigger value="curriculum">
-                  {t("courseDetails.tabs.curriculum")}
-                </TabsTrigger>
-                <TabsTrigger value="instructor">
-                  {t("courseDetails.tabs.instructor")}
-                </TabsTrigger>
-                <TabsTrigger value="reviews">
-                  {t("courseDetails.tabs.reviews")}
-                </TabsTrigger>
+                <TabsTrigger value="overview">Overview</TabsTrigger>
+                <TabsTrigger value="curriculum">Curriculum</TabsTrigger>
+                <TabsTrigger value="instructor">Instructor</TabsTrigger>
+                <TabsTrigger value="reviews">Reviews</TabsTrigger>
               </TabsList>
 
               <TabsContent value="overview" className="space-y-12">
@@ -548,7 +1058,7 @@ export default function CourseDetails() {
                     <CardHeader>
                       <CardTitle className="text-2xl flex items-center gap-2">
                         <Target className="h-6 w-6 text-primary" />
-                        {t("courseDetails.learn.title")}
+                        What you'll learn
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -579,7 +1089,7 @@ export default function CourseDetails() {
                     <CardHeader>
                       <CardTitle className="text-2xl flex items-center gap-2">
                         <BookOpen className="h-6 w-6 text-primary" />
-                        {t("courseDetails.requirements.title")}
+                        Requirements
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -599,9 +1109,7 @@ export default function CourseDetails() {
                 <AnimatedSection animation="fade-up" delay={400}>
                   <Card className="bg-card/80 backdrop-blur-sm">
                     <CardHeader>
-                      <CardTitle className="text-2xl">
-                        {t("courseDetails.description.title")}
-                      </CardTitle>
+                      <CardTitle className="text-2xl">Description</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <p className="text-muted-foreground leading-relaxed text-lg">
@@ -616,7 +1124,7 @@ export default function CourseDetails() {
                 <AnimatedSection animation="fade-up">
                   <div className="text-center mb-12">
                     <h2 className="text-3xl font-bold mb-4">
-                      {t("courseDetails.curriculum.title")}
+                      Course Curriculum
                     </h2>
                     <p className="text-xl text-muted-foreground">
                       <CountUp
@@ -625,8 +1133,7 @@ export default function CourseDetails() {
                           0,
                         )}
                       />{" "}
-                      {t("courseDetails.curriculum.lessons")} •{" "}
-                      <CountUp end={15} /> {t("courseDetails.curriculum.hours")}
+                      lessons • <CountUp end={15} /> hours
                     </p>
                   </div>
 
@@ -747,22 +1254,39 @@ export default function CourseDetails() {
                           <div className="space-y-4">
                             <h4 className="font-semibold">Expertise</h4>
                             <div className="flex flex-wrap gap-2">
-                              {[
-                                "React",
-                                "Node.js",
-                                "MongoDB",
-                                "JavaScript",
-                                "Python",
-                                "AWS",
-                              ].map((skill) => (
-                                <Badge
-                                  key={skill}
-                                  variant="secondary"
-                                  className="px-3 py-1"
-                                >
-                                  {skill}
-                                </Badge>
-                              ))}
+                              {courseId === "1"
+                                ? [
+                                    "French",
+                                    "Language Teaching",
+                                    "Culture",
+                                    "Pronunciation",
+                                    "Grammar",
+                                    "Conversation",
+                                  ].map((skill) => (
+                                    <Badge
+                                      key={skill}
+                                      variant="secondary"
+                                      className="px-3 py-1"
+                                    >
+                                      {skill}
+                                    </Badge>
+                                  ))
+                                : [
+                                    "React",
+                                    "Node.js",
+                                    "JavaScript",
+                                    "HTML5",
+                                    "CSS3",
+                                    "Git",
+                                  ].map((skill) => (
+                                    <Badge
+                                      key={skill}
+                                      variant="secondary"
+                                      className="px-3 py-1"
+                                    >
+                                      {skill}
+                                    </Badge>
+                                  ))}
                             </div>
                           </div>
                         </div>
@@ -799,7 +1323,7 @@ export default function CourseDetails() {
                     itemClassName="group"
                     delay={150}
                   >
-                    {course.reviews.map((review) => (
+                    {courseReviews.map((review) => (
                       <Card
                         key={review.id}
                         className="bg-card/80 backdrop-blur-sm hover:bg-card transition-colors duration-300"
@@ -858,10 +1382,11 @@ export default function CourseDetails() {
         <div className="container mx-auto px-4 text-center relative">
           <AnimatedSection animation="scale-in">
             <h2 className="text-4xl font-bold mb-6">
-              {t("courseDetails.cta.title")}
+              Ready to start learning?
             </h2>
             <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-              {t("courseDetails.cta.subtitle")}
+              Join thousands of students who have already transformed their
+              careers with this course.
             </p>
             <MagneticButton>
               <Button
@@ -870,7 +1395,7 @@ export default function CourseDetails() {
                 onClick={handleEnroll}
               >
                 <Sparkles className="mr-2 h-5 w-5" />
-                {t("courseDetails.enroll")} -{" "}
+                Enroll Now -{" "}
                 {isEgyptUser === true ? course.price.egp : course.price.usd}
               </Button>
             </MagneticButton>
