@@ -948,7 +948,7 @@ export default function Courses() {
     // Math & Logic (12 Courses)
     {
       id: 37,
-      title: "UC Math Course for Kids ��� Mental Math & Brain Development",
+      title: "UC Math Course for Kids – Mental Math & Brain Development",
       description:
         "Fun and engaging mathematics course designed to develop mental math skills and cognitive abilities in children.",
       image: "bg-gradient-to-br from-indigo-600 to-purple-700",
@@ -1201,13 +1201,14 @@ export default function Courses() {
               itemClassName="group"
               delay={100}
             >
-              {sortedCourses.map((course) => (
+                            {sortedCourses.map((course) => (
                 <div key={course.id}>
-                  <Card
-                    className={`course-card card-hover bg-card/80 backdrop-blur-sm border-2 border-transparent hover:border-primary/20 overflow-hidden group transition-all duration-300 ${
-                      viewMode === "list" ? "flex flex-row" : "h-full"
-                    }`}
-                  >
+                  <Link to={`/course-details?id=${course.id}`} className="block h-full">
+                    <Card
+                      className={`course-card card-hover bg-card/80 backdrop-blur-sm border-2 border-transparent hover:border-primary/20 overflow-hidden group transition-all duration-300 cursor-pointer ${
+                        viewMode === "list" ? "flex flex-row" : "h-full"
+                      }`}
+                    >
                     <div
                       className={`relative overflow-hidden ${
                         viewMode === "list" ? "w-80 h-48 flex-shrink-0" : "h-48"
@@ -1327,6 +1328,8 @@ export default function Courses() {
                             </div>
                           )}
                         </div>
+
+                        
                       </CardContent>
                     </div>
                   </Card>
