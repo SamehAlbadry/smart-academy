@@ -1192,7 +1192,9 @@ export default function Courses() {
                     className={`${viewMode === "list" ? "flex flex-row h-auto" : "h-full"} bg-white dark:bg-gray-900 border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden rounded-xl group-hover:-translate-y-1`}
                   >
                     {/* Course Image Section */}
-                    <div className="relative h-52 overflow-hidden">
+                    <div
+                      className={`relative overflow-hidden ${viewMode === "list" ? "w-80 h-48 flex-shrink-0" : "h-52"}`}
+                    >
                       <div className={`w-full h-full ${course.image}`} />
 
                       {/* Overlay with gradient */}
