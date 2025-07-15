@@ -52,13 +52,25 @@ const useEgyptDetection = () => {
 
 // Main Component
 const GeolocationPopup = () => {
-  const [showLocationRequest, setShowLocationRequest] = useState(true);
+  // Check if user has already been asked about location in this session
+  const [hasAskedLocation, setHasAskedLocation] = useState(() => {
+    return sessionStorage.getItem("hasAskedLocation") === "true";
+  });
+
+  const [showLocationRequest, setShowLocationRequest] = useState(() => {
+    return !hasAskedLocation;
+  });
   const [showCurrencyReminder, setShowCurrencyReminder] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
   const { geoError, detectEgypt } = useEgyptDetection();
   const isEgyptUser = useStore((state) => state.isEgyptUser);
   const setEgyptUser = useStore((state) => state.setEgyptUser);
+
+  // Don't show anything if already asked in this session
+  if (hasAskedLocation) {
+    return null;
+  }
 
   const requestLocation = async () => {
     setIsProcessing(true);
