@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { useI18n } from "@/lib/i18n";
 import { useStore } from "@/store/useStore";
