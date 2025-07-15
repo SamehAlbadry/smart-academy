@@ -366,6 +366,96 @@ export default function CourseDetails() {
           ],
         },
       ];
+    } else if (courseId === "8") {
+      return [
+        {
+          title: "Quran Basics and Arabic Letters",
+          lessons: 8,
+          duration: "3 hours",
+          icon: Code,
+          topics: [
+            "Arabic alphabet recognition",
+            "Letter shapes and forms",
+            "Basic pronunciation rules",
+            "Connecting letters",
+            "Short vowels (Harakat)",
+            "Reading simple words",
+          ],
+        },
+        {
+          title: "Tajweed Rules Foundation",
+          lessons: 10,
+          duration: "4.5 hours",
+          icon: Layers,
+          topics: [
+            "Introduction to Tajweed",
+            "Makharij (points of articulation)",
+            "Sifaat (characteristics of letters)",
+            "Noon Sakinah and Tanween rules",
+            "Meem Sakinah rules",
+            "Qalqalah",
+          ],
+        },
+        {
+          title: "Advanced Recitation",
+          lessons: 12,
+          duration: "5 hours",
+          icon: MessageCircle,
+          topics: [
+            "Madd (elongation) rules",
+            "Waqf (stopping) rules",
+            "Ibtida (starting) rules",
+            "Beautiful recitation practice",
+            "Memorization techniques",
+            "Spiritual aspects of recitation",
+          ],
+        },
+      ];
+    } else if (courseId === "18") {
+      return [
+        {
+          title: "Calligraphy Foundations",
+          lessons: 6,
+          duration: "3 hours",
+          icon: Code,
+          topics: [
+            "History of Arabic calligraphy",
+            "Tools and materials",
+            "Basic pen techniques",
+            "Letter proportions",
+            "Naskh script basics",
+            "Practice exercises",
+          ],
+        },
+        {
+          title: "Traditional Scripts",
+          lessons: 8,
+          duration: "4 hours",
+          icon: Layers,
+          topics: [
+            "Thuluth script",
+            "Diwani script",
+            "Kufic script",
+            "Ruq'ah script",
+            "Script characteristics",
+            "Advanced letter forms",
+          ],
+        },
+        {
+          title: "Artistic Composition",
+          lessons: 6,
+          duration: "3 hours",
+          icon: Monitor,
+          topics: [
+            "Layout and composition",
+            "Decorative elements",
+            "Color theory in calligraphy",
+            "Modern adaptations",
+            "Digital calligraphy",
+            "Creating masterpieces",
+          ],
+        },
+      ];
     } else {
       return [
         {
