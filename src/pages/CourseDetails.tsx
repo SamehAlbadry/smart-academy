@@ -63,19 +63,20 @@ export default function CourseDetails() {
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
-    const [course, setCourse] = useState(null);
+  const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [completedLessons, setCompletedLessons] = useState([]);
   const [showPreview, setShowPreview] = useState(false);
 
-    // Course data - this would typically come from an API
+  // Course data - this would typically come from an API
   const coursesData = [
     // Global Languages (24 Courses)
     {
       id: 1,
       title: "French Course",
-      subtitle: "Comprehensive French language course from beginner to intermediate level with native speakers.",
+      subtitle:
+        "Comprehensive French language course from beginner to intermediate level with native speakers.",
       description:
         "This comprehensive French course takes you from beginner to intermediate level with native speaker instruction. You'll learn conversational French, grammar fundamentals, and cultural nuances that will help you communicate effectively in French-speaking environments. Perfect for travelers, students, or professionals looking to expand their language skills.",
       image: "bg-gradient-to-br from-blue-500 to-indigo-600",
@@ -222,7 +223,8 @@ export default function CourseDetails() {
     {
       id: 9,
       title: "Web Design – Front-End",
-      subtitle: "Master modern front-end web development with HTML5, CSS3, JavaScript, and React.",
+      subtitle:
+        "Master modern front-end web development with HTML5, CSS3, JavaScript, and React.",
       description:
         "This comprehensive course takes you from intermediate to advanced web development skills. You'll learn to build scalable, production-ready applications using modern technologies and best practices used by top tech companies. Perfect for aspiring developers and those looking to advance their careers in web development.",
       image: "bg-gradient-to-br from-blue-500 to-purple-600",
@@ -372,12 +374,12 @@ export default function CourseDetails() {
   useEffect(() => {
     setLoading(true);
     if (id) {
-      const foundCourse = coursesData.find(c => c.id === parseInt(id));
+      const foundCourse = coursesData.find((c) => c.id === parseInt(id));
       if (foundCourse) {
         setCourse(foundCourse);
       } else {
         // If course not found, redirect to courses page
-        navigate('/courses');
+        navigate("/courses");
         toast({
           title: "Course not found",
           description: "The requested course could not be found.",
@@ -399,21 +401,20 @@ export default function CourseDetails() {
         <div className="container mx-auto px-4 py-20">
           <div className="text-center">
             <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary mx-auto"></div>
-            <p className="mt-4 text-muted-foreground">Loading course details...</p>
+            <p className="mt-4 text-muted-foreground">
+              Loading course details...
+            </p>
           </div>
         </div>
       </Layout>
     );
   }
 
-  
-
-    const handleEnroll = () => {
+  const handleEnroll = () => {
     setIsEnrolled(true);
     toast({
       title: "Successfully Enrolled! 🎉",
-      description:
-        `Welcome to ${course.title}! You can now access all course materials.`,
+      description: `Welcome to ${course.title}! You can now access all course materials.`,
     });
 
     // Here you would typically make an API call to enroll the user
@@ -430,7 +431,7 @@ export default function CourseDetails() {
     });
   };
 
-    const handleShare = () => {
+  const handleShare = () => {
     if (navigator.share) {
       navigator.share({
         title: course.title,
@@ -575,7 +576,7 @@ export default function CourseDetails() {
                 <AnimatedSection animation="slide-right" delay={200}>
                   <div className="sticky top-24">
                     <Card className="overflow-hidden bg-card/80 backdrop-blur-sm border-2 border-transparent hover:border-primary/20 transition-all duration-500">
-                                            {/* Video Preview */}
+                      {/* Video Preview */}
                       <div
                         className={`aspect-video ${course.image} relative cursor-pointer group`}
                         onClick={handlePreview}
@@ -590,11 +591,14 @@ export default function CourseDetails() {
                         </div>
                         <div className="absolute top-4 right-4">
                           <Badge className="bg-black/50 text-white backdrop-blur-sm">
-                            {showPreview ? \"Playing Preview\" : \"Free Preview\"}
+                            {showPreview ? "Playing Preview" : "Free Preview"}
                           </Badge>
                         </div>
-                        <div className=\"absolute bottom-4 left-4\">
-                          <Badge className=\"bg-primary text-primary-foreground\">\n                            {course.duration}\n                          </Badge>\n                        </div>
+                        <div className="absolute bottom-4 left-4">
+                          <Badge className="bg-primary text-primary-foreground">
+                            {course.duration}
+                          </Badge>
+                        </div>
                       </div>
 
                       <CardContent className="p-6">
@@ -663,13 +667,16 @@ export default function CourseDetails() {
                           </div>
                         </div>
 
-                                                {/* Course Features */}
+                        {/* Course Features */}
                         <div className="space-y-3">
                           <h4 className="font-semibold">
                             {t("courseDetails.includes")}
                           </h4>
                           {course.features.map((feature, index) => (
-                            <div key={index} className="flex items-center gap-3 text-sm">
+                            <div
+                              key={index}
+                              className="flex items-center gap-3 text-sm"
+                            >
                               <feature.icon className="h-4 w-4 text-primary" />
                               <span>{feature.text}</span>
                             </div>
