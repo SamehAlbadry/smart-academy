@@ -1033,6 +1033,10 @@ export default function Courses() {
     return matchesSearch && matchesFilter;
   });
 
+  const handleViewDetails = (courseId: number) => {
+    navigate(`/course-details?id=${courseId}`);
+  };
+
   const sortedCourses = [...filteredCourses].sort((a, b) => {
     switch (sortBy) {
       case "price-low":
