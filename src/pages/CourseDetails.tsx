@@ -644,32 +644,15 @@ export default function CourseDetails() {
                           <h4 className="font-semibold">
                             {t("courseDetails.includes")}
                           </h4>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Monitor className="h-4 w-4 text-primary" />
-                            <span>12 {t("courseDetails.features.video")}</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Download className="h-4 w-4 text-primary" />
-                            <span>{t("courseDetails.features.resources")}</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Smartphone className="h-4 w-4 text-primary" />
-                            <span>{t("courseDetails.features.mobile")}</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Trophy className="h-4 w-4 text-primary" />
-                            <span>
-                              {t("courseDetails.features.certificate")}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Globe className="h-4 w-4 text-primary" />
-                            <span>{t("courseDetails.features.lifetime")}</span>
-                          </div>
-                          <div className="flex items-center gap-3 text-sm">
-                            <Headphones className="h-4 w-4 text-primary" />
-                            <span>{t("courseDetails.features.support")}</span>
-                          </div>
+                          {course.features.map((feature, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center gap-3 text-sm"
+                            >
+                              <feature.icon className="h-4 w-4 text-primary" />
+                              <span>{feature.text}</span>
+                            </div>
+                          ))}
                         </div>
 
                         {/* Guarantee */}
