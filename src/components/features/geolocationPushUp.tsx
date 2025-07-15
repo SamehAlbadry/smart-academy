@@ -105,6 +105,8 @@ const GeolocationPopup = () => {
 
   const closeAllPopups = () => {
     setShowCurrencyReminder(false);
+    sessionStorage.setItem("hasAskedLocation", "true");
+    setHasAskedLocation(true);
   };
 
   return (
