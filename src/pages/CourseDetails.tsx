@@ -58,6 +58,8 @@ export default function CourseDetails() {
   const { t } = useI18n();
   const isEgyptUser = useStore((state) => state.isEgyptUser);
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
+  const courseId = searchParams.get("id");
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
